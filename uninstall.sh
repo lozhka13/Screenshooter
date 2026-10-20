@@ -1,5 +1,5 @@
 #!/bin/bash
-# Удаляет Screenshooter и возвращает скриншоты на Рабочий стол. Папку ~/Screenshots не трогает.
+# Removes Screenshooter and sends screenshots back to the Desktop. Leaves ~/Screenshots alone.
 set -uo pipefail
 
 LABEL=com.screenshooter.sorter
@@ -9,4 +9,4 @@ rm -f "$HOME/Library/LaunchAgents/$LABEL.plist" "$HOME/bin/screenshot-sorter" "$
 defaults delete com.apple.screencapture location 2>/dev/null
 killall SystemUIServer 2>/dev/null
 
-echo "Удалено. Разобранные файлы остались в ~/Screenshots."
+echo "Removed. Sorted files are still in ~/Screenshots."

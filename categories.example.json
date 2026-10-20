@@ -1,0 +1,5 @@
+[
+  { "label": "Work", "folder": "Work", "subfolders": false },
+  { "label": "Projects", "folder": "Projects", "subfolders": true },
+  { "label": "Personal", "folder": "Personal", "subfolders": true }
+]

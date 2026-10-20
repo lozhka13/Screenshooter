@@ -1,19 +1,19 @@
 #!/bin/bash
-# Сжимает скриншот или запись экрана на месте.
-# PNG — без потерь (oxipng). Видео — H.265 с визуально неотличимым качеством;
-# новое содержимое пишется в тот же файл (дата создания и теги Finder остаются),
-# оригинал уходит в Корзину, только если новый файл получился меньше.
+# Compresses a screenshot or screen recording in place.
+# PNG — lossless (oxipng). Video — H.265 at visually lossless quality;
+# the new content is written into the same file (creation date and Finder tags are kept),
+# and the original goes to the Trash only if the new file is smaller.
 set -u
 export PATH="/opt/homebrew/bin:$PATH"
 
 f=$1
 ext=${f##*.}
 dir=$(dirname "$f")
-tmp="$dir/.compressing-$$.$ext"   # результат ffmpeg
-orig="$dir/.original-$$.$ext"     # клон оригинала, пока перезаписываем файл
+tmp="$dir/.compressing-$$.$ext"   # ffmpeg output
+orig="$dir/.original-$$.$ext"     # clone of the original while the file is rewritten
 writing=""
 
-# Прервали посреди перезаписи — возвращаем оригинал; временные файлы не оставляем.
+# Interrupted mid-rewrite — restore the original; never leave temp files behind.
 cleanup() {
   if [ -n "$writing" ] && [ -e "$orig" ]; then
     cat "$orig" > "$f" && touch -r "$orig" "$f"
@@ -34,7 +34,7 @@ case "$(echo "$ext" | tr '[:upper:]' '[:lower:]')" in
       -c:a copy -movflags +faststart "$tmp" || exit 1
     [ "$(stat -f %z "$tmp")" -lt "$(stat -f %z "$f")" ] || exit 0
 
-    cp -c "$f" "$orig" || exit 1   # клон APFS: мгновенно и без лишнего места
+    cp -c "$f" "$orig" || exit 1   # APFS clone: instant and takes no extra space
     writing=1
     if cat "$tmp" > "$f"; then
       writing=""

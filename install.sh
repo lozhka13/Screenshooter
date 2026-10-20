@@ -1,6 +1,6 @@
 #!/bin/bash
-# Устанавливает Screenshooter: приложение, скрипт сжатия, автозапуск и папку Inbox.
-# Из исходников (нужны Xcode Command Line Tools) или из готового бинарника релиза.
+# Installs Screenshooter: the app, the compression script, the launch agent and the Inbox folder.
+# Builds from source (needs Xcode Command Line Tools) or installs the prebuilt release binary.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -15,20 +15,23 @@ if command -v brew >/dev/null; then
   brew list ffmpeg >/dev/null 2>&1 || brew install ffmpeg
   brew list oxipng >/dev/null 2>&1 || brew install oxipng
 else
-  echo "Homebrew не найден (https://brew.sh): без ffmpeg и oxipng файлы не будут сжиматься." >&2
+  echo "Homebrew not found (https://brew.sh): without ffmpeg and oxipng files won't be compressed." >&2
 fi
 
 if [ -f Sources/main.swift ] && xcrun --find swiftc >/dev/null 2>&1; then
-  echo "Собираю приложение…"
-  xcrun swiftc -O Sources/main.swift -o "$BIN/screenshot-sorter"
+  echo "Building the app…"
+  xcrun swiftc -O Sources/*.swift -o "$BIN/screenshot-sorter"
 elif [ -f screenshot-sorter ]; then
   cp screenshot-sorter "$BIN/screenshot-sorter"
   xattr -d com.apple.quarantine "$BIN/screenshot-sorter" 2>/dev/null || true
 else
-  echo "Нет ни исходников со swiftc, ни готового бинарника screenshot-sorter." >&2
+  echo "Neither the sources with swiftc nor the prebuilt screenshot-sorter binary were found." >&2
   exit 1
 fi
 install -m 755 scripts/screenshot-compress.sh "$BIN/screenshot-compress.sh"
+
+# Example categories on first install; edit ~/Screenshots/categories.json to change them.
+[ -f "$HOME/Screenshots/categories.json" ] || cp categories.example.json "$HOME/Screenshots/categories.json"
 
 cat > "$PLIST" <<PL
 <?xml version="1.0" encoding="UTF-8"?>
@@ -49,9 +52,9 @@ PL
 launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 
-# Скриншоты и записи экрана (Cmd+Shift+3/4/5) — в Inbox.
+# Screenshots and screen recordings (Cmd+Shift+3/4/5) go to Inbox.
 defaults write com.apple.screencapture location "$INBOX"
 killall SystemUIServer 2>/dev/null || true
 
-echo "Готово. Скриншоты сохраняются в $INBOX."
-echo "Совет: Cmd+Shift+5 → Параметры → снимите «Показывать плавающую миниатюру», чтобы окно открывалось сразу."
+echo "Done. Screenshots are saved to $INBOX."
+echo "Tip: Cmd+Shift+5 → Options → turn off “Show Floating Thumbnail” so the window opens right away."
