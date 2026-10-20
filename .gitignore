@@ -1,3 +1,4 @@
 .DS_Store
-/screenshot-sorter
+/.build/
 /dist/
+/screenshot-sorter

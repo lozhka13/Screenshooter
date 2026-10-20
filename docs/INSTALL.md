@@ -1,43 +1,25 @@
 # Installing Screenshooter
 
-This guide takes about five minutes. You need:
+About five minutes. You need macOS 26 (Tahoe) or later on an Apple Silicon Mac.
 
-- macOS 26 (Tahoe) or later on an Apple Silicon Mac;
-- [Homebrew](https://brew.sh) — only for background compression (`ffmpeg`, `oxipng`). Without it everything else works.
+## 1. Install
 
-## 1. Install compression tools
-
-Open Terminal and run:
+### Homebrew (recommended)
 
 ```bash
-brew install ffmpeg oxipng
+brew install --cask lozhka13/tap/screenshooter
+brew install ffmpeg oxipng   # optional: background compression
 ```
 
-Skip this step if you don't need files compressed.
+### Disk image
 
-## 2. Install the app
-
-### Option A — disk image (recommended)
-
-1. Download `Screenshooter-1.2.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest).
+1. Download `Screenshooter-2.0.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest).
 2. Open it and drag **Screenshooter** onto **Applications**.
-3. Open **Applications** and double-click **Screenshooter**.
+3. Optional: `brew install ffmpeg oxipng` for compression.
 
-The app is signed ad hoc but not notarized by Apple, so on the first launch macOS says it can't verify the developer:
+### From source
 
-1. Click **Done** (not *Move to Trash*).
-2. Open **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to Screenshooter.
-3. Confirm with **Open** and your password.
-
-You only do this once. Alternatively, remove the quarantine flag in Terminal:
-
-```bash
-xattr -dr com.apple.quarantine /Applications/Screenshooter.app
-```
-
-### Option B — build from source
-
-Needs Xcode Command Line Tools (`xcode-select --install`):
+Needs Xcode or the Command Line Tools (`xcode-select --install`):
 
 ```bash
 git clone https://github.com/lozhka13/Screenshooter.git
@@ -45,103 +27,91 @@ cd Screenshooter
 ./install.sh
 ```
 
-The script installs the Homebrew tools, builds `Screenshooter.app`, copies it to `/Applications` (or `~/Applications` if that isn't writable) and opens it. A locally built app doesn't trigger the Gatekeeper warning.
+## 2. First launch
 
-## 3. First launch
+Open **Screenshooter** from Applications.
 
-When you open Screenshooter from Finder it sets itself up and shows a status window:
+The app is signed ad hoc but not notarized, so macOS may say it can't verify the developer the first time:
+
+1. Click **Done** (not *Move to Trash*).
+2. Open **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to Screenshooter and confirm.
+
+Or in Terminal: `xattr -dr com.apple.quarantine /Applications/Screenshooter.app`.
+
+On first launch Screenshooter:
 
 - creates `~/Screenshots/Inbox` and makes macOS save screenshots and screen recordings there;
 - creates `~/Screenshots/categories.json` with example categories;
-- registers a launch agent (`~/Library/LaunchAgents/com.screenshooter.sorter.plist`), so the app starts by itself whenever a file lands in Inbox and quits once everything is sorted.
+- adds itself to **Login Items** so it starts with your Mac (turn off in Settings → General);
+- shows a welcome message and lives in the menu bar from then on — the 🖼 icon with a count of waiting files.
 
-There is no Dock icon and nothing to keep running — the app appears only when there is something to sort.
+If you used Screenshooter 1.x, the old launch agent is removed automatically.
 
-## 4. Turn off the floating thumbnail
+## 3. Turn off the floating thumbnail
 
-Press `Cmd+Shift+5` → **Options** → uncheck **Show Floating Thumbnail**.
+`Cmd+Shift+5` → **Options** → uncheck **Show Floating Thumbnail**. Otherwise a screenshot reaches Inbox only after the thumbnail slides away.
 
-With the thumbnail on, a screenshot reaches Inbox only after the thumbnail slides away, and if you drag the thumbnail into a chat the file is never saved.
+## 4. Permissions
+
+macOS asks for each of these the first time a feature needs it. All are optional.
+
+| Permission | Asked when | Used for |
+|---|---|---|
+| Screen & System Audio Recording | You start a recording | Recording the screen and call audio; also lets suggestions see window titles |
+| Microphone | You start a recording with the microphone on | Your voice in recordings |
+| Speech Recognition | A Russian (or other non-English) recording is transcribed | On-device transcription |
+| Automation → your browser | You take a screenshot of a browser | Reading the tab's address and title for suggestions and file names |
+
+Settings → Recording has buttons that open the right System Settings pages.
 
 ## 5. Try it
 
 Press `Cmd+Shift+4` and select an area. The sorting window opens:
 
-- `1` `2` `3` choose a category; categories with subfolders open a second level (`1` — the category itself, `2…9` — subfolders, `N` — new folder);
-- `Delete` moves the file to the Trash;
-- drag the preview into any chat to send a copy.
+- `1` `2` `3` choose a category; categories with subfolders open a second level;
+- after a few sorted screenshots of the same app or page, a suggestion appears — press `Return`;
+- `E` marks it up, `R` blurs detected secrets, `C` copies, `Delete` trashes, `⌘Z` undoes.
 
-See the [key reference](../README.md#keys) for everything else.
+Record the screen with `⌃⌥⌘R` (or **Record Screen** in the menu bar), press it again to stop. The recording is sorted like a screenshot and transcribed into a `.txt` next to it.
 
-## 6. Set up your categories
+## 6. Categories
 
-Click **Edit Categories** in the status window (open the app from Applications to see it again), or edit `~/Screenshots/categories.json`:
-
-```json
-[
-  { "label": "Work", "folder": "Work", "subfolders": false },
-  { "label": "Projects", "folder": "Projects", "subfolders": true },
-  { "label": "Personal", "folder": "Personal", "subfolders": true }
-]
-```
-
-- `label` — button text;
-- `folder` — folder inside `~/Screenshots`;
-- `subfolders` — show the second level with the folders inside it.
-
-Up to 9 categories; the key is the position in the list. Changes apply the next time the window opens.
+**Settings → Categories** (menu bar icon → Settings…): label, folder, whether it has subfolders, and keywords that suggest it. Or edit `~/Screenshots/categories.json`. Up to 9; the key is the position in the list.
 
 ## 7. Connect Claude (optional)
 
-Screenshooter includes an MCP server, so Claude can list, view and file your screenshots. Click **Copy Claude MCP Command** in the status window and run it in Terminal, or run:
+**Settings → Claude → Copy Command**, then run it in Terminal:
 
 ```bash
 claude mcp add --scope user screenshooter /Applications/Screenshooter.app/Contents/MacOS/screenshooter-mcp
 ```
 
-Then ask Claude things like *“what's on my latest screenshot?”* or *“move today's screenshots of the dashboard to Projects → Atlas”*. The server can only read and write inside `~/Screenshots`.
+For Claude Desktop, **Copy Configuration** gives the block for `~/Library/Application Support/Claude/claude_desktop_config.json`.
 
-For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "screenshooter": {
-      "command": "/Applications/Screenshooter.app/Contents/MacOS/screenshooter-mcp"
-    }
-  }
-}
-```
+Then ask Claude *“what's on my latest screenshot?”*, *“find screenshots with ‘invoice’ from this week”* or *“read the transcript of today's recording and list the action items”*.
 
 ## Updating
 
-Download the new disk image and replace the app in Applications, or run `git pull && ./install.sh`. Open the app once afterwards so it updates the launch agent.
+Screenshooter checks GitHub for a new version once a day (Settings → About). With Homebrew: `brew upgrade --cask screenshooter`. Or download the new disk image and replace the app.
 
 ## Uninstalling
 
 ```bash
-./uninstall.sh
+brew uninstall --cask screenshooter   # or quit from the menu bar and delete the app
+./uninstall.sh                        # puts screenshots back on the Desktop, removes the Claude registration
 ```
 
-Or by hand:
-
-```bash
-launchctl bootout gui/$(id -u)/com.screenshooter.sorter
-rm ~/Library/LaunchAgents/com.screenshooter.sorter.plist
-rm -rf /Applications/Screenshooter.app
-defaults delete com.apple.screencapture location && killall SystemUIServer
-claude mcp remove --scope user screenshooter
-```
-
-Your sorted files stay in `~/Screenshots`.
+Your files stay in `~/Screenshots`.
 
 ## Troubleshooting
 
 | Problem | Fix |
 |---|---|
-| The window doesn't open after a screenshot | Open the app from Applications once — it re-registers the launch agent. Check `~/Screenshots/.sorter.log`. |
-| Screenshots still land on the Desktop | `Cmd+Shift+5` → Options → Save to → Other Location → `~/Screenshots/Inbox`, or reopen the app. |
-| The window opens only a few seconds later | Turn off the floating thumbnail (step 4). |
-| Files aren't getting smaller | Install the tools: `brew install ffmpeg oxipng`. The status window shows whether compression is on. |
-| “Screenshooter can't be opened” | See the Gatekeeper steps in [Option A](#option-a--disk-image-recommended). |
-| Claude doesn't see the tools | Run `claude mcp list`; the `screenshooter` server should be listed. Restart Claude after adding it. |
+| No window after a screenshot | Is the 🖼 icon in the menu bar? If not, open the app. Check that screenshots go to `~/Screenshots/Inbox` (`Cmd+Shift+5` → Options → Save to). |
+| Window opens a few seconds late | Turn off the floating thumbnail (step 3). |
+| No folder suggestions | They appear after a few screenshots of the same page or app are filed, or add keywords to a category. Settings → General must have suggestions on. |
+| “Can't start recording” | Allow Screenshooter in System Settings → Privacy & Security → Screen & System Audio Recording, then quit and reopen it. |
+| No transcript | Settings → Recording → Transcription on; for Russian allow Speech Recognition. English models download on first use. |
+| Files aren't getting smaller | `brew install ffmpeg oxipng`. |
+| Claude doesn't see the tools | `claude mcp list` should list `screenshooter`; restart Claude after adding it. |
+| Logs | `log stream --predicate 'process == "Screenshooter"'` |

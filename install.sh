@@ -1,6 +1,6 @@
 #!/bin/bash
 # Installs Screenshooter from source: builds Screenshooter.app, copies it to Applications and opens it.
-# On first launch the app sets up ~/Screenshots/Inbox, the screenshot location and its launch agent.
+# On first launch the app sets up ~/Screenshots/Inbox, the screenshot location and its login item.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -17,6 +17,8 @@ scripts/build-app.sh
 TARGET=/Applications
 [ -w "$TARGET" ] || TARGET="$HOME/Applications"
 mkdir -p "$TARGET"
+osascript -e 'tell application id "com.lozhka13.screenshooter" to quit' 2>/dev/null || true
+sleep 1
 pkill -x Screenshooter 2>/dev/null || true
 rm -rf "$TARGET/Screenshooter.app"
 cp -R dist/Screenshooter.app "$TARGET/"

@@ -1,22 +1,35 @@
-// Window, menu bar item, key and mouse monitors.
+// Window, menu bar item, recording shortcut, key and mouse monitors.
+import Carbon
 import Cocoa
+import ScreenshooterCore
 import SwiftUI
 
-final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate {
   var window: NSWindow!
+  var settingsWindow: NSWindow?
   var statusItem: NSStatusItem!
   var scanTimer: Timer?
+  var recordingShortcut: HotKey?
   let model = MainActor.assumeIsolated { SorterModel() }
+  let recorder = MainActor.assumeIsolated { Recorder() }
   var large = UserDefaults.standard.bool(forKey: "large") {
     didSet { UserDefaults.standard.set(large, forKey: "large") }
   }
 
   func applicationDidFinishLaunching(_ notification: Notification) {
-    Setup.run()
-    // Opened from Finder rather than by the launch agent — show what's set up.
-    if Setup.isAppBundle && !Setup.launchedByAgent && !demoMode {
-      MainActor.assumeIsolated { Setup.showStatus() }
+    // One copy at a time: a second launch just brings up the first one's settings.
+    if Setup.isAppBundle, let id = Bundle.main.bundleIdentifier,
+      NSRunningApplication.runningApplications(withBundleIdentifier: id).count > 1
+    {
+      DistributedNotificationCenter.default().postNotificationName(.init("\(id).reopen"), object: nil)
+      NSApp.terminate(nil)
+      return
     }
+    if let id = Bundle.main.bundleIdentifier {
+      DistributedNotificationCenter.default().addObserver(
+        self, selector: #selector(openSettings), name: .init("\(id).reopen"), object: nil)
+    }
+    Setup.run()
 
     window = NSWindow(
       contentRect: NSRect(x: 0, y: 0, width: 900, height: 680),
@@ -48,16 +61,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     statusItem.button?.image = NSImage(
       systemSymbolName: "photo.on.rectangle.angled", accessibilityDescription: "Screenshooter")
     statusItem.button?.imagePosition = .imageLeading
-    statusItem.button?.target = self
-    statusItem.button?.action = #selector(statusClicked)
-    statusItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
+    let menu = NSMenu()
+    menu.delegate = self
+    statusItem.menu = menu
 
     MainActor.assumeIsolated {
       model.onLayout = { [weak self] in self?.fitPreview() }
       model.onToggleLarge = { [weak self] in self?.toggleLarge() }
-      model.onCount = { [weak self] count in
-        self?.statusItem.button?.title = count > 0 ? " \(count)" : ""
-      }
+      model.onCount = { [weak self] _ in self?.updateStatusItem() }
       model.onShow = { [weak self] in
         guard let self, let window = self.window, !window.isVisible,
           !MainActor.assumeIsolated({ self.model.hiddenByUser })
@@ -86,15 +97,109 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       MainActor.assumeIsolated { self.model.loupeEnabled.toggle() }
       return nil
     }
-    scanTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-      guard let model = self?.model else { return }
-      MainActor.assumeIsolated { model.scan() }
+    // Common modes: keeps scanning while a menu or an alert is open.
+    let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+      guard let self else { return }
+      MainActor.assumeIsolated { self.model.scan() }
+      self.updateStatusItem()
+    }
+    RunLoop.main.add(timer, forMode: .common)
+    scanTimer = timer
+
+    if !demoMode {
+      recordingShortcut = HotKey(keyCode: kVK_ANSI_R, modifiers: cmdKey | optionKey | controlKey, id: 1) { [weak self] in
+        self?.toggleRecording()
+      }
+      MainActor.assumeIsolated {
+        if Setup.isAppBundle && !Setup.welcomed {
+          Setup.welcome { openSettings() }
+        }
+        Updater.checkDaily()
+      }
     }
   }
 
+  // Opening the app again from Finder shows the settings.
+  func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+    openSettings()
+    return false
+  }
+
+  // MARK: Menu bar
+
+  func updateStatusItem() {
+    let (waiting, recording, elapsed) = MainActor.assumeIsolated {
+      (model.waiting, recorder.isRecording, recorder.elapsed)
+    }
+    statusItem.button?.title = recording ? " ● \(elapsed)" : waiting > 0 ? " \(waiting)" : ""
+    statusItem.button?.contentTintColor = recording ? .systemRed : nil
+  }
+
+  // Rebuilt every time it opens, so counts and recording state are current.
+  func menuNeedsUpdate(_ menu: NSMenu) {
+    menu.removeAllItems()
+    let (waiting, recording, canUndo) = MainActor.assumeIsolated {
+      (model.waiting, recorder.isRecording, !model.history.isEmpty)
+    }
+    if waiting > 0 {
+      item(menu, String(format: L("Show %d Waiting"), waiting), #selector(showFromTray))
+    }
+    let record = item(menu, recording ? L("Stop Recording") : L("Record Screen"), #selector(toggleRecording), "r")
+    record.keyEquivalentModifierMask = [.command, .option, .control]
+    if canUndo { item(menu, L("Undo Last Sort"), #selector(undo)) }
+    menu.addItem(.separator())
+    item(menu, L("Open Screenshots Folder"), #selector(openFolder))
+    item(menu, L("Settings…"), #selector(openSettings), ",")
+    item(menu, L("Check for Updates…"), #selector(checkForUpdates))
+    menu.addItem(.separator())
+    item(menu, L("Quit Screenshooter"), #selector(quit), "q")
+  }
+
+  @discardableResult
+  func item(_ menu: NSMenu, _ title: String, _ action: Selector, _ key: String = "") -> NSMenuItem {
+    let item = menu.addItem(withTitle: title, action: action, keyEquivalent: key)
+    item.target = self
+    return item
+  }
+
+  @objc func toggleRecording() {
+    MainActor.assumeIsolated { recorder.toggle() }
+  }
+
+  @objc func undo() {
+    MainActor.assumeIsolated { model.undo() }
+  }
+
+  @objc func openFolder() {
+    NSWorkspace.shared.open(base)
+  }
+
+  @objc func checkForUpdates() {
+    Task { await Updater.check(userInitiated: true) }
+  }
+
+  @objc func openSettings() {
+    if settingsWindow == nil {
+      let window = NSWindow(
+        contentRect: NSRect(x: 0, y: 0, width: 640, height: 480), styleMask: [.titled, .closable],
+        backing: .buffered, defer: false)
+      window.title = L("Screenshooter Settings")
+      window.isReleasedWhenClosed = false
+      window.contentView = NSHostingView(rootView: SettingsView())
+      window.center()
+      settingsWindow = window
+    }
+    settingsWindow?.makeKeyAndOrderFront(nil)
+    NSApp.activate(ignoringOtherApps: true)
+  }
+
+  // MARK: Sorting window
+
   // The window resizes for every image — keep it from running off screen.
   func windowDidResize(_ notification: Notification) {
-    guard let visible = window.screen?.visibleFrame else { return }
+    guard let window, notification.object as? NSWindow === window, let visible = window.screen?.visibleFrame else {
+      return
+    }
     var origin = window.frame.origin
     origin.x = min(max(origin.x, visible.minX), visible.maxX - window.frame.width)
     origin.y = min(max(origin.y, visible.minY), visible.maxY - window.frame.height)
@@ -111,7 +216,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
       : image.size.width / max(image.size.height, 1)
     let visible = (window.screen ?? NSScreen.main)?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1440, height: 900)
     let maxWidth = large ? visible.width - 40 : min(1300, visible.width * 0.9 - 40)
-    let maxHeight = (large ? visible.height : visible.height * 0.92) - 140  // title bar, buttons, padding
+    let maxHeight = (large ? visible.height : visible.height * 0.92) - 160  // title bar, buttons, padding
     var size = CGSize(width: maxWidth, height: maxWidth / aspect)
     if size.height > maxHeight {
       size = CGSize(width: maxHeight * aspect, height: maxHeight)
@@ -125,8 +230,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     DispatchQueue.main.async { [weak self] in self?.window.center() }
   }
 
-  // The red and yellow buttons hide the window to the menu bar; the rest waits in Inbox.
+  // The red and yellow buttons hide the sorting window to the menu bar; the rest waits in Inbox.
   func windowShouldClose(_ sender: NSWindow) -> Bool {
+    guard sender === window else { return true }
     hideToTray()
     return false
   }
@@ -146,29 +252,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     NSApp.activate(ignoringOtherApps: true)
   }
 
-  @objc func statusClicked() {
-    guard NSApp.currentEvent?.type == .rightMouseUp else {
-      window.isVisible ? hideToTray() : showFromTray()
-      return
-    }
-    let menu = NSMenu()
-    menu.addItem(withTitle: "Show", action: #selector(showFromTray), keyEquivalent: "").target = self
-    menu.addItem(.separator())
-    menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q").target = self
-    statusItem.menu = menu
-    statusItem.button?.performClick(nil)
-    statusItem.menu = nil
-  }
-
-  // Quit: the rest waits in Inbox until the next screenshot; a started compression is finished.
+  // Finishes a recording and background work, then quits; unsorted files wait in Inbox.
   @objc func quit() {
-    scanTimer?.invalidate()  // new screenshots no longer open the window
+    scanTimer?.invalidate()
     window.orderOut(nil)
-    NSStatusBar.system.removeStatusItem(statusItem)
-    let compressor = MainActor.assumeIsolated { model.compressor }
-    DispatchQueue.global().async {
-      compressor.waitUntilAllOperationsAreFinished()
-      DispatchQueue.main.async { NSApp.terminate(nil) }
+    Task { @MainActor in
+      await recorder.stop()
+      await model.pipeline.waitUntilIdle()
+      NSApp.terminate(nil)
     }
   }
 }

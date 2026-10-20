@@ -1,0 +1,102 @@
+/* Menu bar */
+"Show %d Waiting" = "Показать ожидающие: %d";
+"Stop Recording" = "Остановить запись";
+"Record Screen" = "Записать экран";
+"Undo Last Sort" = "Отменить последнее действие";
+"Open Screenshots Folder" = "Открыть папку скриншотов";
+"Settings…" = "Настройки…";
+"Check for Updates…" = "Проверить обновления…";
+"Quit Screenshooter" = "Завершить Screenshooter";
+
+/* Recording */
+"Can't start recording" = "Не удаётся начать запись";
+"Allow Screenshooter in System Settings → Privacy & Security → Screen & System Audio Recording, then try again." = "Разрешите Screenshooter в Системных настройках → Конфиденциальность и безопасность → Запись экрана и системного аудио, затем попробуйте снова.";
+"Open System Settings" = "Открыть Системные настройки";
+
+/* Sorting window */
+"All sorted" = "Всё разобрано";
+"Press ⌘Z to undo the last one" = "⌘Z — отменить последнее";
+"Undo" = "Отменить";
+"Undone" = "Отменено";
+"Copied" = "Скопировано";
+"Secrets blurred" = "Секреты размыты";
+"Still compressing — try again in a moment" = "Файл ещё сжимается — попробуйте через пару секунд";
+"Folder" = "Папка";
+"New folder" = "Новая папка";
+"Text" = "Текст";
+"Cancel" = "Отмена";
+"Save" = "Сохранить";
+"Drag into a chat or another app" = "Перетащите в чат или другое приложение";
+"Suggested from similar screenshots" = "Подсказка по похожим скриншотам";
+"Possible passwords or tokens — press R to blur them" = "Похоже на пароли или токены — нажмите R, чтобы размыть";
+"Draw arrows, boxes, text or blur" = "Стрелки, рамки, текст и размытие";
+"Copy to the clipboard" = "Скопировать в буфер обмена";
+"Undo the last sort" = "Отменить последнее действие";
+"Move to Trash" = "В Корзину";
+"Loupe on — right-click to turn off" = "Лупа включена — правый клик выключает";
+"Loupe off — right-click to turn on" = "Лупа выключена — правый клик включает";
+
+/* Settings */
+"Screenshooter Settings" = "Настройки Screenshooter";
+"General" = "Основные";
+"Categories" = "Категории";
+"Recording" = "Запись";
+"Claude" = "Claude";
+"About" = "О программе";
+"Open at login" = "Открывать при входе";
+"Allow in Login Items…" = "Разрешить в «Объектах входа»…";
+"Sorting" = "Разбор";
+"Suggest a folder from similar screenshots" = "Подсказывать папку по похожим скриншотам";
+"Name files after the page or heading" = "Называть файлы по странице или заголовку";
+"Highlight passwords and tokens" = "Подсвечивать пароли и токены";
+"Compression" = "Сжатие";
+"Compress after sorting (PNG lossless, video H.265)" = "Сжимать после разбора (PNG без потерь, видео в H.265)";
+"Needs Homebrew tools: brew install ffmpeg oxipng" = "Нужны инструменты Homebrew: brew install ffmpeg oxipng";
+"Folders" = "Папки";
+"Screenshots" = "Скриншоты";
+"Show in Finder" = "Показать в Finder";
+"Up to 9 categories; the key is the position in the list. Keywords in a page address, title or text suggest the category." = "До 9 категорий; клавиша — номер в списке. Ключевые слова в адресе, заголовке или тексте подсказывают категорию.";
+"Label" = "Название";
+"Subfolders" = "Подпапки";
+"Keywords" = "Ключевые слова";
+"Add Category" = "Добавить категорию";
+"Open categories.json" = "Открыть categories.json";
+"New" = "Новая";
+"Saved" = "Сохранено";
+"Start or stop recording" = "Начать или остановить запись";
+"Record system audio (calls, videos)" = "Записывать звук системы (созвоны, видео)";
+"Record the microphone" = "Записывать микрофон";
+"Recordings of the screen under the pointer go to Inbox and are sorted like screenshots." = "Записывается экран под курсором; запись попадает в Inbox и разбирается как скриншот.";
+"Transcription" = "Расшифровка";
+"Transcribe recordings on this Mac" = "Расшифровывать записи на этом Mac";
+"Language" = "Язык";
+"Automatic" = "Автоматически";
+"The transcript is saved next to the recording as a .txt file. Nothing leaves your Mac." = "Расшифровка сохраняется рядом с записью в файл .txt. Ничего не покидает ваш Mac.";
+"Permissions" = "Разрешения";
+"Screen & System Audio Recording…" = "Запись экрана и системного аудио…";
+"Microphone…" = "Микрофон…";
+"Speech Recognition…" = "Распознавание речи…";
+"Claude can list, search, view and file your screenshots and read transcripts of recordings. It only sees ~/Screenshots." = "Claude может искать, просматривать и раскладывать ваши скриншоты и читать расшифровки записей. Он видит только ~/Screenshots.";
+"Claude Code" = "Claude Code";
+"Copy Command" = "Скопировать команду";
+"Claude Desktop — claude_desktop_config.json" = "Claude Desktop — claude_desktop_config.json";
+"Copy Configuration" = "Скопировать настройки";
+"Version %@" = "Версия %@";
+"Check for Updates" = "Проверить обновления";
+"Check for updates automatically" = "Проверять обновления автоматически";
+"Security report" = "Отчёт о безопасности";
+
+/* Welcome */
+"Screenshooter is ready" = "Screenshooter готов";
+"Take a screenshot (⌘⇧3 / ⌘⇧4 / ⌘⇧5) and the sorting window opens. Record the screen with sound from the menu bar or with ⌃⌥⌘R.\n\nScreenshots go to %@. Screenshooter lives in the menu bar and opens at login.\n\nTip: ⌘⇧5 → Options → turn off “Show Floating Thumbnail”." = "Сделайте скриншот (⌘⇧3 / ⌘⇧4 / ⌘⇧5) — откроется окно разбора. Запись экрана со звуком — из строки меню или по ⌃⌥⌘R.\n\nСкриншоты сохраняются в %@. Screenshooter живёт в строке меню и открывается при входе.\n\nСовет: ⌘⇧5 → Параметры → снимите «Показывать плавающую миниатюру».";
+"OK" = "OK";
+
+/* Updates */
+"Couldn't check for updates" = "Не удалось проверить обновления";
+"Check your internet connection and try again." = "Проверьте подключение к интернету и попробуйте снова.";
+"You're up to date" = "Установлена последняя версия";
+"Screenshooter %@ is the latest version." = "Screenshooter %@ — последняя версия.";
+"Screenshooter %@ is available" = "Доступен Screenshooter %@";
+"You have %@. Download the new disk image and replace the app." = "У вас версия %@. Скачайте новый образ диска и замените приложение.";
+"Download" = "Скачать";
+"Later" = "Позже";
