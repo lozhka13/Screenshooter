@@ -1,4 +1,5 @@
 // The window content: preview with loupe, secrets and marks, glass buttons.
+import QuickLookThumbnailing
 import ScreenshooterCore
 import SwiftUI
 
@@ -25,18 +26,45 @@ struct SorterView: View {
   @State private var markText = ""
 
   let loupeSize: CGFloat = 380
+  let sidebarWidth = sidebarColumn
   let loupeZoom: CGFloat = 2.5
 
   var body: some View {
-    VStack(spacing: 16) {
-      previewArea
-      controls
+    HStack(alignment: .top, spacing: 16) {
+      if model.showsSidebar && !model.allDone { sidebar }
+      VStack(spacing: 16) {
+        previewArea
+        controls
+      }
     }
     .padding(.horizontal, 20)
     .padding(.top, 4)
     .padding(.bottom, 20)
     .background(backdrop)
     .preferredColorScheme(.dark)
+  }
+
+  // Thumbnails of everything waiting, like the page sidebar in Preview; click or ← → to switch.
+  var sidebar: some View {
+    ScrollViewReader { proxy in
+      ScrollView(.vertical, showsIndicators: false) {
+        LazyVStack(spacing: 12) {
+          ForEach(Array(model.items.enumerated()), id: \.element) { index, url in
+            QueueThumbnail(url: url, number: model.done + index + 1, selected: url == model.current)
+              .id(url)
+              .onTapGesture { model.select(url) }
+              .help(url.lastPathComponent)
+          }
+        }
+        .padding(10)
+      }
+      .onChange(of: model.current) { _, url in
+        guard let url else { return }
+        withAnimation { proxy.scrollTo(url, anchor: .center) }
+      }
+    }
+    .frame(width: sidebarWidth, height: model.previewSize.height)
+    .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
   }
 
   // Blurred screenshot under the glass.
@@ -358,5 +386,45 @@ struct SorterView: View {
     .glassEffect(.regular, in: .capsule)
     .glassEffectID("new", in: glass)
     .onAppear { DispatchQueue.main.async { nameFocused = true } }
+  }
+}
+
+// Sidebar width; AppDelegate.fitPreview leaves room for it plus the gap.
+let sidebarColumn: CGFloat = 132
+
+struct QueueThumbnail: View {
+  let url: URL
+  let number: Int
+  let selected: Bool
+  @State private var image: NSImage?
+
+  var body: some View {
+    VStack(spacing: 5) {
+      ZStack {
+        if let image {
+          Image(nsImage: image).resizable().scaledToFit()
+        } else {
+          RoundedRectangle(cornerRadius: 6).fill(.white.opacity(0.08)).frame(height: 66)
+        }
+        if isVideo(url) {
+          Image(systemName: "play.circle.fill").font(.title3).foregroundStyle(.white).shadow(radius: 3)
+        }
+      }
+      .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+      .overlay(
+        RoundedRectangle(cornerRadius: 7, style: .continuous)
+          .strokeBorder(selected ? Color.accentColor : .white.opacity(0.12), lineWidth: selected ? 3 : 1)
+          .padding(-3))
+      Text("\(number)")
+        .font(.system(size: 11, weight: selected ? .bold : .regular, design: .rounded))
+        .monospacedDigit()
+        .foregroundStyle(selected ? .primary : .secondary)
+    }
+    .contentShape(Rectangle())
+    .task(id: url) {
+      let request = QLThumbnailGenerator.Request(
+        fileAt: url, size: CGSize(width: 220, height: 160), scale: 2, representationTypes: .thumbnail)
+      image = try? await QLThumbnailGenerator.shared.generateBestRepresentation(for: request).nsImage
+    }
   }
 }

@@ -13,7 +13,7 @@ brew install ffmpeg oxipng   # optional: background compression
 
 ### Disk image
 
-1. Download `Screenshooter-2.1.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest).
+1. Download `Screenshooter-2.2.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest).
 2. Open it and drag **Screenshooter** onto **Applications**.
 3. Optional: `brew install ffmpeg oxipng` for compression.
 

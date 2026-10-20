@@ -244,7 +244,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
       ? CGFloat(rep!.pixelsWide) / CGFloat(max(rep!.pixelsHigh, 1))
       : image.size.width / max(image.size.height, 1)
     let visible = (window.screen ?? NSScreen.main)?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1440, height: 900)
-    let maxWidth = large ? visible.width - 40 : min(1300, visible.width * 0.9 - 40)
+    let sidebar = model.showsSidebar ? sidebarColumn + 16 : 0  // thumbnails column and its gap
+    let maxWidth = (large ? visible.width - 40 : min(1300, visible.width * 0.9 - 40)) - sidebar
     let maxHeight = (large ? visible.height : visible.height * 0.92) - 160  // title bar, buttons, padding
     var size = CGSize(width: maxWidth, height: maxWidth / aspect)
     if size.height > maxHeight {

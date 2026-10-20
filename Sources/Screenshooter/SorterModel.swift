@@ -15,7 +15,7 @@ final class SorterModel: ObservableObject {
   @Published var categories = CategoryStore.load()
   @Published var current: URL?
   @Published var preview: NSImage?
-  @Published var queue: [URL] = []
+  @Published var items: [URL] = []  // everything waiting in Inbox, in order, the current file included
   @Published var done = 0
   @Published var opened: SortCategory?  // category whose subfolders are shown
   @Published var subfolders: [String] = []
@@ -51,8 +51,10 @@ final class SorterModel: ObservableObject {
   var analysis: Task<Void, Never>?
   var toastTask: Task<Void, Never>?
 
-  var progress: String { "\(done + 1) / \(done + 1 + queue.count)" }
-  var waiting: Int { (current == nil ? 0 : 1) + queue.count }
+  var position: Int { current.flatMap { items.firstIndex(of: $0) } ?? 0 }
+  var progress: String { "\(done + position + 1) / \(done + items.count)" }
+  var waiting: Int { items.count }
+  var showsSidebar: Bool { items.count > 1 }
 
   // Progress and file name go to the window title.
   func updateTitle() {
@@ -69,21 +71,26 @@ final class SorterModel: ObservableObject {
   }
 
   func scan() {
+    let hadSidebar = showsSidebar
+    var removedAt: Int?
     if let url = current, !FileManager.default.fileExists(atPath: url.path) {
-      current = nil  // the file was removed from Inbox by hand
+      removedAt = items.firstIndex(of: url)  // the file was removed from Inbox by hand
+      current = nil
     }
+    items.removeAll { !FileManager.default.fileExists(atPath: $0.path) }
     let files = candidates()
     lastSizes = lastSizes.filter { files.contains($0.key) }  // forget files that are gone
-    for url in files where url != current && !queue.contains(url) {
+    for url in files where !items.contains(url) {
       let size = Library.fileSize(url)
       if lastSizes[url] == nil { captureContext(url) }
       if lastSizes[url] == size {
-        queue.append(url)
+        items.append(url)
       } else {
         lastSizes[url] = size
       }
     }
-    if current == nil && (!allDone || !queue.isEmpty) { showNext() }
+    if current == nil && (!allDone || !items.isEmpty) { showNext(at: removedAt ?? 0) }
+    if showsSidebar != hadSidebar { onLayout() }  // the sidebar takes width from the preview
     updateTitle()
   }
 
@@ -99,9 +106,10 @@ final class SorterModel: ObservableObject {
     }
   }
 
-  func showNext() {
-    queue.removeAll { !FileManager.default.fileExists(atPath: $0.path) }
-    guard !queue.isEmpty else {
+  // The file at `index` — after a sort that's the one that followed it, as in Preview.
+  func showNext(at index: Int = 0) {
+    items.removeAll { !FileManager.default.fileExists(atPath: $0.path) }
+    guard !items.isEmpty else {
       current = nil
       preview = nil
       resetFileState()
@@ -109,7 +117,7 @@ final class SorterModel: ObservableObject {
         allDone = true  // stays a moment so the last sort can be undone
         Task {
           try? await Task.sleep(for: .seconds(4))
-          guard allDone, queue.isEmpty, current == nil else { return }
+          guard allDone, items.isEmpty, current == nil else { return }
           finishBatch()
         }
       } else {
@@ -117,7 +125,23 @@ final class SorterModel: ObservableObject {
       }
       return
     }
-    show(queue.removeFirst())
+    show(items[min(max(index, 0), items.count - 1)])
+  }
+
+  // Switch to another waiting file without sorting the current one.
+  func select(_ url: URL) {
+    guard url != current, items.contains(url), !editing else { return }
+    show(url)
+  }
+
+  func step(_ offset: Int) {
+    guard !items.isEmpty else { return }
+    let index = position + offset
+    guard items.indices.contains(index) else {
+      NSSound.beep()
+      return
+    }
+    select(items[index])
   }
 
   func finishBatch() {
@@ -285,10 +309,12 @@ final class SorterModel: ObservableObject {
 
   func finishCurrent() {
     guard let url = current else { return }
+    let index = items.firstIndex(of: url) ?? 0
+    items.removeAll { $0 == url }
     lastSizes[url] = nil
     current = nil
     done += 1
-    showNext()
+    showNext(at: index)
   }
 
   func record(_ action: UndoRecord) {
@@ -332,7 +358,7 @@ final class SorterModel: ObservableObject {
   }
 
   func reopen(_ url: URL) {
-    if let current, current != url { queue.insert(current, at: 0) }
+    if !items.contains(url) { items.insert(url, at: position) }
     if done > 0 { done -= 1 }
     hiddenByUser = false
     show(url)
@@ -501,6 +527,8 @@ final class SorterModel: ObservableObject {
     case 45:  // N (any keyboard layout)
       guard opened != nil else { return false }
       startNaming()
+    case 123, 126: step(-1)  // ← ↑ — previous file
+    case 124, 125: step(1)  // → ↓ — next file
     case 3: onToggleLarge()  // F
     case 8: copyCurrent()  // C
     case 14: startEditing()  // E

@@ -3,7 +3,7 @@
 > Screenshooter is a free Mac app (macOS 26, Apple Silicon) that files every screenshot and screen recording into the right folder with one keystroke. It suggests the folder, renames the file, blurs passwords, compresses it and lets Claude search everything you captured. Text recognition and transcription run on the Mac; nothing is uploaded.
 
 ## Key facts
-- Price: free. Source code: https://github.com/lozhka13/Screenshooter
+- Price: free. Open source, MIT license: https://github.com/lozhka13/Screenshooter
 - Latest version: 2.1.0, released 2026-10-20
 - Install: `brew install --cask lozhka13/tap/screenshooter` or the disk image from GitHub Releases
 - Requires: macOS 26 Tahoe on Apple Silicon

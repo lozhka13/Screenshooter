@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Release** | v2.1.0 |
+| **Release** | v2.2.0 |
 | **Date** | 2026-10-20 |
 | **Scanner** | [Trivy](https://trivy.dev) 0.76.0, vulnerability DB updated 2026-10-20 07:17 UTC |
 | **Result** | No vulnerabilities, secrets, misconfigurations or license issues found |
@@ -46,6 +46,8 @@ Trivy can't see into Swift code, so the code was reviewed by hand, with unit tes
 **Secret detection (new in 2.0.0)** — passwords after a label, known token formats (GitHub, OpenAI, Anthropic, Slack, AWS, Google, JWT, private keys), credentials in URLs, Luhn-valid card numbers and high-entropy tokens. Handles OCR reading Latin letters as Cyrillic twins. Blurring pixelates the area in the file (not reversible from the image); the original goes to the Trash so the edit can be undone — empty the Trash to get rid of it.
 
 **2.1.0 additions** — pinning, copying text, styling (rendered into the file with the original kept in the Trash, like edits), GIF export (written next to the recording with a unique name, never overwriting) and the library window (read-only search; indexing writes only the text attribute). Smart names send at most 1,500 characters of recognized text to Apple's on-device model.
+
+**2.2.0** — queue sidebar and arrow-key navigation only change which waiting file is shown; switching is disabled while the editor has unsaved marks. Licensed under MIT.
 
 **Undo and file safety** — moves never overwrite (`name 2.png`…); background transcription and compression start 8 seconds after a move and skip files that were moved back; undo refuses while a file is being compressed. Video compression rewrites in place with a clone of the original kept until the write succeeds.
 

@@ -20,6 +20,10 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 
 ![Editor with a box around two buttons, an arrow, a text label and a blurred price](docs/editor.png)
 
+**A whole burst at once.** Several screenshots in a row line up in a sidebar of thumbnails, like pages in Preview. `←` `→` or a click switch between them; filing one opens the next.
+
+![Sorting window with a sidebar of four numbered thumbnails](docs/queue.png)
+
 **Subfolders and new folders from the keyboard.** Categories with subfolders open a second level: `1` keeps the file in the category, `2…9` pick a subfolder, `N` creates one.
 
 ![Second level: Projects with Atlas, Halo and Orbit website subfolders](docs/subfolders.png)
@@ -37,7 +41,7 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 ## Features
 
 **Sorting**
-- One window for the whole queue with `3 / 12` progress; the window fits the screenshot's shape.
+- One window for the whole queue with `3 / 12` progress and a thumbnail sidebar like Preview's; `←` `→` switch files. The window fits the screenshot's shape.
 - Folder suggestions learned from your choices, plus keywords per category.
 - Readable file names from the page title, window title or main heading: `2026-10-20 10.42.15 — Q3 Overview.png`.
 - `⌘Z` undoes the last move, delete or edit — also from the menu bar.
@@ -69,6 +73,7 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 | Key | Action |
 |---|---|
 | `Return` | Take the suggested folder |
+| `←` `→` (or `↑` `↓`) | Previous or next waiting file — or click a thumbnail in the sidebar |
 | `1` `2` `3` … | Category (second level: `1` — the category itself, `2…9` — subfolders) |
 | `N` | New subfolder |
 | `Esc` | Back |
@@ -95,7 +100,7 @@ Requires macOS 26 (Tahoe) on Apple Silicon.
 brew install --cask lozhka13/tap/screenshooter
 ```
 
-Or download `Screenshooter-2.1.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications. For compression install `brew install ffmpeg oxipng`.
+Or download `Screenshooter-2.2.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications. For compression install `brew install ffmpeg oxipng`.
 
 The **[installation guide](docs/INSTALL.md)** covers the first launch, permissions, categories, connecting Claude, updating and troubleshooting.
 
@@ -163,3 +168,7 @@ The [security report](docs/security-report.md) covers the Trivy scan, the permis
 ## Uninstall
 
 `brew uninstall --cask screenshooter`, or quit the app from the menu bar and delete it; then `./uninstall.sh` puts screenshots back on the Desktop. `~/Screenshots` with your files stays.
+
+## License
+
+[MIT](LICENSE) © 2026 lozhka13
