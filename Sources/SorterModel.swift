@@ -213,7 +213,7 @@ final class SorterModel: ObservableObject {
     compressor.addOperation {
       let process = Process()
       process.executableURL = URL(fileURLWithPath: "/usr/bin/nice")
-      process.arguments = ["-n", "15", NSHomeDirectory() + "/bin/screenshot-compress.sh", url.path]
+      process.arguments = ["-n", "15", compressScript, url.path]
       try? process.run()
       process.waitUntilExit()
     }

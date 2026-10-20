@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d4bff"/>
+      <stop offset="0.55" stop-color="#3a6cff"/>
+      <stop offset="1" stop-color="#18c8f0"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0.3" cy="0.15" r="0.75">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd5a8"/>
+      <stop offset="1" stop-color="#ff8a6b"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.16"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0b1050" flood-opacity="0.35"/>
+    </filter>
+    <filter id="iconShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <clipPath id="photo"><rect x="300" y="268" width="424" height="296" rx="26"/></clipPath>
+  </defs>
+
+  <!-- macOS squircle body -->
+  <g filter="url(#iconShadow)">
+    <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+    <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#shine)"/>
+    <rect x="101.5" y="101.5" width="821" height="821" rx="183.5" fill="none" stroke="#fff" stroke-opacity="0.25" stroke-width="3"/>
+  </g>
+
+  <!-- stack of screenshots behind -->
+  <g filter="url(#shadow)">
+    <rect x="262" y="236" width="500" height="360" rx="34" fill="#fff" fill-opacity="0.22" transform="rotate(-9 512 416)"/>
+    <rect x="262" y="236" width="500" height="360" rx="34" fill="#fff" fill-opacity="0.32" transform="rotate(5 512 416)"/>
+  </g>
+
+  <!-- front screenshot -->
+  <g filter="url(#shadow)">
+    <rect x="276" y="244" width="472" height="344" rx="38" fill="#fff"/>
+    <g clip-path="url(#photo)">
+      <rect x="300" y="268" width="424" height="296" fill="url(#sky)"/>
+      <circle cx="622" cy="352" r="42" fill="#fff6e0"/>
+      <path d="M300 520 L410 410 L486 480 L560 404 L724 540 L724 564 L300 564Z" fill="#6d4bff"/>
+      <path d="M300 564 L400 480 L470 530 L540 470 L640 564Z" fill="#3a2aa8"/>
+    </g>
+  </g>
+
+  <!-- viewfinder corners -->
+  <g fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M236 290 V236 a32 32 0 0 1 32 -32 H322"/>
+    <path d="M702 204 H756 a32 32 0 0 1 32 32 V290"/>
+    <path d="M236 542 V596 a32 32 0 0 0 32 32 H322"/>
+    <path d="M702 628 H756 a32 32 0 0 0 32 -32 V542"/>
+  </g>
+
+  <!-- three glass capsules: the 1 / 2 / 3 buttons -->
+  <g font-family="SF Pro Rounded, -apple-system, Helvetica, sans-serif" font-weight="700" font-size="54" text-anchor="middle">
+    <rect x="232" y="686" width="168" height="96" rx="48" fill="url(#glass)" stroke="#fff" stroke-opacity="0.55" stroke-width="3"/>
+    <text x="316" y="753" fill="#fff">1</text>
+    <rect x="428" y="686" width="168" height="96" rx="48" fill="#fff" stroke="#fff" stroke-width="3"/>
+    <text x="512" y="753" fill="#3a6cff">2</text>
+    <rect x="624" y="686" width="168" height="96" rx="48" fill="url(#glass)" stroke="#fff" stroke-opacity="0.55" stroke-width="3"/>
+    <text x="708" y="753" fill="#fff">3</text>
+  </g>
+</svg>

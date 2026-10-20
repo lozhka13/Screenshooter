@@ -12,6 +12,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
   }
 
   func applicationDidFinishLaunching(_ notification: Notification) {
+    Setup.run()
+    // Opened from Finder rather than by the launch agent — show what's set up.
+    if Setup.isAppBundle && !Setup.launchedByAgent && !demoMode {
+      MainActor.assumeIsolated { Setup.showStatus() }
+    }
+
     window = NSWindow(
       contentRect: NSRect(x: 0, y: 0, width: 900, height: 680),
       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],

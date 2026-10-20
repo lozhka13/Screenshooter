@@ -40,3 +40,8 @@ let categories: [Category] = {
   else { return defaultCategories }
   return Array(list.prefix(9))
 }()
+
+// Inside Screenshooter.app the script ships in Resources; a plain build uses ~/bin.
+let compressScript =
+  Bundle.main.path(forResource: "screenshot-compress", ofType: "sh")
+  ?? NSHomeDirectory() + "/bin/screenshot-compress.sh"

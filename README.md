@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/icon-1024.png" width="160" alt="Screenshooter icon"></p>
+
 # Screenshooter
 
 Sort macOS screenshots and screen recordings into folders right after you take them — with one key.
@@ -31,6 +33,7 @@ Take a screenshot (`Cmd+Shift+3/4/5`) or a screen recording and a window opens w
 - **Background compression**: PNG losslessly (`oxipng`), video to H.265 at visually lossless quality (`ffmpeg`). Creation date and Finder tags are kept, and the original video goes to the Trash.
 - **Menu bar mode**: hide the window and keep a counter of waiting files in the menu bar.
 - **Full screen width** with the green button or `F`.
+- **Claude integration**: a built-in MCP server lets Claude list, view and file your screenshots.
 
 ## Keys
 
@@ -48,26 +51,15 @@ Take a screenshot (`Cmd+Shift+3/4/5`) or a screen recording and a window opens w
 
 ## Install
 
-You need macOS 26 (Tahoe), Apple Silicon and [Homebrew](https://brew.sh), which installs `ffmpeg` and `oxipng`.
+Requires macOS 26 (Tahoe) on Apple Silicon. [Homebrew](https://brew.sh) is needed only for compression: `brew install ffmpeg oxipng`.
 
-**From source** (needs Xcode Command Line Tools: `xcode-select --install`):
+1. Download `Screenshooter-1.2.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications.
+2. Open it. On first launch it sets up `~/Screenshots/Inbox`, the screenshot location and its launch agent, then shows a status window.
+3. Turn off `Cmd+Shift+5` → Options → “Show Floating Thumbnail”.
 
-```bash
-git clone https://github.com/lozhka13/Screenshooter.git
-cd Screenshooter
-./install.sh
-```
+Or build from source: `git clone https://github.com/lozhka13/Screenshooter.git && cd Screenshooter && ./install.sh`.
 
-**From a release**: download the archive from the [releases page](https://github.com/lozhka13/Screenshooter/releases), unzip it and run `./install.sh`. This installs the prebuilt binary.
-
-The installer:
-
-- puts the app and the compression script into `~/bin`;
-- makes macOS save screenshots to `~/Screenshots/Inbox`;
-- creates `~/Screenshots/categories.json` with example categories, unless it already exists;
-- registers a launch agent (`~/Library/LaunchAgents/com.screenshooter.sorter.plist`). The app starts by itself when a file lands in Inbox and quits once everything is sorted.
-
-Turn off the floating thumbnail: `Cmd+Shift+5` → Options → uncheck “Show Floating Thumbnail”. Otherwise a screenshot reaches Inbox only after the thumbnail disappears, and if you drag the thumbnail into a chat the file is never saved.
+The **[installation guide](docs/INSTALL.md)** covers the Gatekeeper prompt, categories, connecting Claude, updating, uninstalling and troubleshooting.
 
 ## Categories
 
@@ -85,6 +77,24 @@ Categories live in `~/Screenshots/categories.json`:
 
 Subfolders come from disk: every folder inside `~/Screenshots/<folder>/` shows up on the second level in alphabetical order.
 
+## Claude integration (MCP)
+
+The app ships with `screenshooter-mcp`, an MCP server for Claude Code and Claude Desktop:
+
+```bash
+claude mcp add --scope user screenshooter /Applications/Screenshooter.app/Contents/MacOS/screenshooter-mcp
+```
+
+| Tool | What it does |
+|---|---|
+| `list_categories` | Categories, subfolders and file counts, plus unsorted Inbox |
+| `list_screenshots` | Newest files, filtered by category, subfolder and date |
+| `get_screenshot` | Shows a screenshot to Claude (first frame for recordings) |
+| `latest_screenshot` | The most recent screenshot, optionally within a category |
+| `move_screenshot` | Files a screenshot into a category or subfolder and compresses it |
+
+Ask *“what's on my latest screenshot?”*, *“list this week's screenshots in Projects”* or *“file the Inbox screenshots of the dashboard into Projects → Atlas”*. The server only reads and writes inside `~/Screenshots`.
+
 ## How it works
 
 | File | What it does |
@@ -94,7 +104,10 @@ Subfolders come from disk: every folder inside `~/Screenshots/<folder>/` shows u
 | `Sources/SorterView.swift` | The window content: preview, loupe, glass buttons |
 | `Sources/FlowLayout.swift` | Wraps the buttons onto rows |
 | `Sources/AppDelegate.swift` | Window, menu bar item, keyboard and mouse monitors |
+| `Sources/Setup.swift` | First-run setup and the status window |
+| `MCP/main.swift` | The MCP server for Claude (JSON-RPC over stdio) |
 | `scripts/screenshot-compress.sh` | Compresses one file in place; the app runs it after each move, one file at a time, at low priority |
+| `scripts/build-app.sh` | Builds `Screenshooter.app`; `--dmg` also makes the release disk image |
 
 A launchd `WatchPaths` agent starts the app whenever Inbox changes. Errors are logged to `~/Screenshots/.sorter.log`.
 
@@ -116,4 +129,4 @@ The [security report](docs/security-report.md) covers the Trivy scan and the man
 ./uninstall.sh
 ```
 
-This removes the app and the launch agent and sends screenshots back to the Desktop. `~/Screenshots` with your sorted files stays.
+This removes the app, the launch agent and the Claude MCP registration, and sends screenshots back to the Desktop. `~/Screenshots` with your sorted files stays.
