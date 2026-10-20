@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Release** | v2.0.0 |
+| **Release** | v2.1.0 |
 | **Date** | 2026-10-20 |
 | **Scanner** | [Trivy](https://trivy.dev) 0.76.0, vulnerability DB updated 2026-10-20 07:17 UTC |
 | **Result** | No vulnerabilities, secrets, misconfigurations or license issues found |
@@ -17,9 +17,9 @@
 
 ## Dependencies
 
-`Package.swift` declares **no third-party packages**. The app and the MCP server use only Apple frameworks: SwiftUI, AppKit, ScreenCaptureKit, AVFoundation, Vision, Speech, ImageIO, CoreImage, ServiceManagement, Carbon (hot key).
+`Package.swift` declares **no third-party packages**. The app and the MCP server use only Apple frameworks: SwiftUI, AppKit, ScreenCaptureKit, AVFoundation, Vision, Speech, FoundationModels, QuickLookThumbnailing, ImageIO, CoreImage, ServiceManagement, Carbon (hot keys).
 
-Compression uses two Homebrew formulae installed separately, not shipped in the app:
+Compression and GIF export use two Homebrew formulae installed separately, not shipped in the app:
 
 | Dependency | Installed | Latest | Status |
 |---|---|---|---|
@@ -37,13 +37,15 @@ Compression uses two Homebrew formulae installed separately, not shipped in the 
 | Automation (browsers) | Address and title of the tab you captured | Stored in the file's metadata |
 | Network | Daily check of `api.github.com/repos/lozhka13/Screenshooter/releases/latest`; first-use download of Apple's speech models | Only a GET request; can be turned off in Settings → About |
 
-Text recognition (Vision) and transcription (Speech) run on the device.
+Text recognition (Vision), transcription (Speech) and smart file names (Apple Intelligence via FoundationModels) run on the device.
 
 ## Manual review
 
-Trivy can't see into Swift code, so the code was reviewed by hand, with unit tests for the risky parts (`swift test`, 33 tests).
+Trivy can't see into Swift code, so the code was reviewed by hand, with unit tests for the risky parts (`swift test`, 34 tests).
 
 **Secret detection (new in 2.0.0)** — passwords after a label, known token formats (GitHub, OpenAI, Anthropic, Slack, AWS, Google, JWT, private keys), credentials in URLs, Luhn-valid card numbers and high-entropy tokens. Handles OCR reading Latin letters as Cyrillic twins. Blurring pixelates the area in the file (not reversible from the image); the original goes to the Trash so the edit can be undone — empty the Trash to get rid of it.
+
+**2.1.0 additions** — pinning, copying text, styling (rendered into the file with the original kept in the Trash, like edits), GIF export (written next to the recording with a unique name, never overwriting) and the library window (read-only search; indexing writes only the text attribute). Smart names send at most 1,500 characters of recognized text to Apple's on-device model.
 
 **Undo and file safety** — moves never overwrite (`name 2.png`…); background transcription and compression start 8 seconds after a move and skip files that were moved back; undo refuses while a file is being compressed. Video compression rewrites in place with a clone of the original kept until the write succeeds.
 

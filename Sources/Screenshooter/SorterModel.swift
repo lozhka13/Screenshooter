@@ -191,6 +191,12 @@ final class SorterModel: ObservableObject {
       if Preferences.suggestFolders, let metadata = ShotMetadata.read(url) {
         withAnimation(.bouncy) { suggestion = suggester.suggest(metadata, categories: categories) }
       }
+      // A short on-device AI title for the file name, when Apple Intelligence is on.
+      let text = lines.map(\.text).joined(separator: "\n")
+      let app = ShotMetadata.read(url)?.appName
+      if let summary = await Summarizer.title(for: text, app: app), FileManager.default.fileExists(atPath: url.path) {
+        ShotMetadata.update(url) { $0.summary = summary }
+      }
     }
   }
 
@@ -343,6 +349,51 @@ final class SorterModel: ObservableObject {
     flash(L("Copied"))
   }
 
+  // Recognized text on the clipboard.
+  func copyText() {
+    guard let url = current else { return }
+    Task {
+      let text = await TextRecognizer.text(of: url)
+      guard !text.isEmpty else {
+        flash(L("No text found"))
+        return
+      }
+      NSPasteboard.general.clearContents()
+      NSPasteboard.general.setString(text, forType: .string)
+      flash(L("Text copied"))
+    }
+  }
+
+  // A floating copy that stays on top of other windows.
+  func pinCurrent() {
+    guard let url = current else { return }
+    Pins.pin(url)
+    flash(L("Pinned"))
+  }
+
+  // Gradient background, rounded corners and a shadow — ready for a slide or a tweet.
+  func beautifyCurrent() {
+    transform(Renderer.beautify)
+    flash(L("Styled"))
+  }
+
+  // A GIF of the recording; it joins the queue so it can be filed too.
+  func makeGIF() {
+    guard let url = current, isVideo(url) else {
+      NSSound.beep()
+      return
+    }
+    flash(L("Making a GIF…"))
+    Task {
+      do {
+        _ = try await Converter.gif(from: url)
+        flash(L("GIF ready — it's next in the queue"))
+      } catch {
+        flash(error.localizedDescription)
+      }
+    }
+  }
+
   func flash(_ message: String) {
     toastTask?.cancel()
     withAnimation { toast = message }
@@ -388,11 +439,19 @@ final class SorterModel: ObservableObject {
 
   // Draws marks into the file; the original goes to the Trash so the edit can be undone.
   func apply(_ marks: [Mark]) {
-    guard let url = current else { return }
+    transform { Renderer.render($0, marks: marks) }
+  }
+
+  // Rewrites the current image; the original goes to the Trash so the change can be undone.
+  func transform(_ change: @escaping (CGImage) -> CGImage?) {
+    guard let url = current, !isVideo(url) else {
+      NSSound.beep()
+      return
+    }
     Task {
       do {
         let image = try await Images.load(url)
-        guard let result = Renderer.render(image, marks: marks) else { throw ImageError.unencodable }
+        guard let result = change(image) else { throw ImageError.unencodable }
         let metadata = ShotMetadata.read(url)
         let copy = url.deletingLastPathComponent().appendingPathComponent(".original-\(UUID().uuidString).\(url.pathExtension)")
         try FileManager.default.copyItem(at: url, to: copy)
@@ -446,6 +505,10 @@ final class SorterModel: ObservableObject {
     case 8: copyCurrent()  // C
     case 14: startEditing()  // E
     case 15: redactSecrets()  // R
+    case 17: copyText()  // T
+    case 35: pinCurrent()  // P
+    case 11: beautifyCurrent()  // B
+    case 5: makeGIF()  // G
     default:
       return handleDigit(event)
     }

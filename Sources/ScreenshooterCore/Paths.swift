@@ -14,7 +14,7 @@ public let base =
 public let inbox = base.appendingPathComponent("Inbox")
 public let stateFolder = base.appendingPathComponent(".screenshooter")  // learned suggestions
 
-public let imageExtensions: Set<String> = ["png", "jpg", "jpeg", "heic"]
+public let imageExtensions: Set<String> = ["png", "jpg", "jpeg", "heic", "gif"]
 public let videoExtensions: Set<String> = ["mov", "mp4"]
 public let mediaExtensions = imageExtensions.union(videoExtensions)
 

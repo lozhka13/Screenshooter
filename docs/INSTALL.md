@@ -13,7 +13,7 @@ brew install ffmpeg oxipng   # optional: background compression
 
 ### Disk image
 
-1. Download `Screenshooter-2.0.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest).
+1. Download `Screenshooter-2.1.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest).
 2. Open it and drag **Screenshooter** onto **Applications**.
 3. Optional: `brew install ffmpeg oxipng` for compression.
 
@@ -70,7 +70,9 @@ Press `Cmd+Shift+4` and select an area. The sorting window opens:
 
 - `1` `2` `3` choose a category; categories with subfolders open a second level;
 - after a few sorted screenshots of the same app or page, a suggestion appears — press `Return`;
-- `E` marks it up, `R` blurs detected secrets, `C` copies, `Delete` trashes, `⌘Z` undoes.
+- `E` marks it up, `R` blurs detected secrets, `C` copies, `T` copies the text, `P` pins it, `B` styles it, `Delete` trashes, `⌘Z` undoes.
+
+Search everything you captured with `⌃⌥⌘F`.
 
 Record the screen with `⌃⌥⌘R` (or **Record Screen** in the menu bar), press it again to stop. The recording is sorted like a screenshot and transcribed into a `.txt` next to it.
 

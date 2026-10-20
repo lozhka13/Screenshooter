@@ -266,21 +266,56 @@ struct SorterView: View {
         action: model.redactSecrets)
         .help("Possible passwords or tokens — press R to blur them")
     }
-    chip(id: "edit", key: "E", symbol: "pencil.tip", action: model.startEditing)
-      .help("Draw arrows, boxes, text or blur")
-    chip(id: "copy", key: "C", symbol: "doc.on.doc", action: model.copyCurrent)
-      .help("Copy to the clipboard")
+    toolCluster
     if !model.history.isEmpty {
       chip(id: "undo", key: "⌘Z", symbol: "arrow.uturn.backward", action: model.undo)
         .help("Undo the last sort")
     }
-    chip(
-      id: "loupe", key: "RMB", symbol: model.loupeEnabled ? "plus.magnifyingglass" : "magnifyingglass",
-      tint: model.loupeEnabled ? .blue : nil
-    ) { model.loupeEnabled.toggle() }
-      .help(model.loupeEnabled ? "Loupe on — right-click to turn off" : "Loupe off — right-click to turn on")
     chip(id: "delete", key: "⌫", symbol: "trash", tint: .red, action: model.deleteCurrent)
       .help("Move to Trash")
+  }
+
+  // Everyday actions in one capsule: icon on top, key below.
+  var toolCluster: some View {
+    let video = model.current.map(isVideo) ?? false
+    return HStack(spacing: 2) {
+      if !video {
+        tool("pencil.tip", "E", "Draw arrows, boxes, text or blur", action: model.startEditing)
+      }
+      tool("doc.on.doc", "C", "Copy to the clipboard", action: model.copyCurrent)
+      tool("text.viewfinder", "T", "Copy the text", action: model.copyText)
+      if video {
+        tool("photo.stack", "G", "Make a GIF", action: model.makeGIF)
+      } else {
+        tool("pin", "P", "Pin on top of other windows", action: model.pinCurrent)
+        tool("wand.and.stars", "B", "Style: background, rounded corners, shadow", action: model.beautifyCurrent)
+      }
+      tool(
+        model.loupeEnabled ? "plus.magnifyingglass" : "magnifyingglass", "RMB",
+        model.loupeEnabled ? "Loupe on — right-click to turn off" : "Loupe off — right-click to turn on",
+        active: model.loupeEnabled
+      ) { model.loupeEnabled.toggle() }
+    }
+    .padding(.horizontal, 8)
+    .padding(.vertical, 3)
+    .glassEffect(.regular, in: .capsule)
+    .glassEffectID("tools", in: glass)
+  }
+
+  func tool(_ symbol: String, _ key: String, _ help: String, active: Bool = false, action: @escaping () -> Void)
+    -> some View
+  {
+    Button(action: action) {
+      VStack(spacing: 2) {
+        Image(systemName: symbol).font(.system(size: 15, weight: .medium))
+        Text(key).font(.system(size: 9, weight: .semibold, design: .rounded)).foregroundStyle(.secondary)
+      }
+      .foregroundStyle(active ? Color.accentColor : .primary)
+      .frame(width: 40, height: 38)
+      .contentShape(Rectangle())
+    }
+    .buttonStyle(.plain)
+    .help(L(help))
   }
 
   func chip(

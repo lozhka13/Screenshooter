@@ -100,3 +100,31 @@
 "You have %@. Download the new disk image and replace the app." = "У вас версия %@. Скачайте новый образ диска и замените приложение.";
 "Download" = "Скачать";
 "Later" = "Позже";
+
+/* 2.1 */
+"No text found" = "Текст не найден";
+"Text copied" = "Текст скопирован";
+"Pinned" = "Закреплено";
+"Styled" = "Оформлено";
+"Making a GIF…" = "Делаю GIF…";
+"GIF ready — it's next in the queue" = "GIF готов — он следующий в очереди";
+"Copy the text" = "Скопировать текст";
+"Pin on top of other windows" = "Закрепить поверх окон";
+"Style: background, rounded corners, shadow" = "Оформить: фон, скругления, тень";
+"Make a GIF" = "Сделать GIF";
+"Search Screenshots…" = "Поиск по скриншотам…";
+"Screenshot Library" = "Библиотека скриншотов";
+"Search text, titles, apps and transcripts" = "Поиск по тексту, заголовкам, программам и расшифровкам";
+"Everything" = "Везде";
+"Inbox" = "Inbox";
+"%d screenshots aren't searchable by text yet" = "Скриншотов без поиска по тексту: %d";
+"Indexing…" = "Индексирую…";
+"Index Now" = "Проиндексировать";
+"No screenshots yet" = "Скриншотов пока нет";
+"Nothing found" = "Ничего не найдено";
+"Open" = "Открыть";
+"Copy" = "Скопировать";
+"Copy Text" = "Скопировать текст";
+"Pin" = "Закрепить";
+"Smart names with Apple Intelligence" = "Умные названия через Apple Intelligence";
+"Turn on Apple Intelligence in System Settings to name files from what the screen shows." = "Включите Apple Intelligence в Системных настройках, чтобы файлы назывались по содержимому экрана.";

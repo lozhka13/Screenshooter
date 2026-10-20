@@ -24,6 +24,10 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 
 ![Second level: Projects with Atlas, Halo and Orbit website subfolders](docs/subfolders.png)
 
+**Find it again by what it showed.** `⌃⌥⌘F` opens the library: search every screenshot by its text, page title, app and file name, and every recording by what was said.
+
+![Screenshot library with a search field and thumbnails of screenshots and recordings](docs/library.png)
+
 **Read the small print.** Hover over the preview and a loupe magnifies it 2.5×. Right-click toggles it.
 
 ![Loupe magnifying chat text in a screenshot of a code editor](docs/loupe.png)
@@ -37,7 +41,10 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 - Folder suggestions learned from your choices, plus keywords per category.
 - Readable file names from the page title, window title or main heading: `2026-10-20 10.42.15 — Q3 Overview.png`.
 - `⌘Z` undoes the last move, delete or edit — also from the menu bar.
-- `C` copies the image to the clipboard; drag the preview into any chat to send a copy.
+- `C` copies the image, `T` copies the text on it; drag the preview into any chat to send a copy.
+- `P` pins a screenshot on top of other windows; `B` styles it for slides (gradient, rounded corners, shadow).
+- A library window (`⌃⌥⌘F`) searches everything by text, title, app and transcript.
+- Smart file names from Apple Intelligence, on device, when it's turned on.
 
 **Privacy**
 - Passwords, keys, tokens and card numbers are detected and blurred with one key.
@@ -47,6 +54,7 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 **Recording**
 - `⌃⌥⌘R` or the menu bar records the screen with system audio (calls, videos) and your microphone.
 - Recordings are transcribed on your Mac into a `.txt` next to the video — English, Russian and other languages.
+- `G` turns a recording into a GIF for a bug report.
 
 **Claude**
 - A built-in MCP server lets Claude search screenshots by their text, view them, file them and read transcripts — handy for meeting digests.
@@ -69,6 +77,11 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 | `C` | Copy to the clipboard |
 | `E` | Editor: `A` arrow, `B` box, `T` text, `P` blur, `Return` save, `Esc` cancel |
 | `R` | Blur detected secrets |
+| `T` | Copy the text on the screenshot |
+| `P` | Pin on top of other windows |
+| `B` | Style: gradient background, rounded corners, shadow |
+| `G` | Make a GIF from a recording |
+| `⌃⌥⌘F` | Search the library (anywhere) |
 | `F` | Full screen width and back |
 | Right mouse button | Loupe on/off |
 | `⌃⌥⌘R` | Start or stop a screen recording (anywhere) |
@@ -82,7 +95,7 @@ Requires macOS 26 (Tahoe) on Apple Silicon.
 brew install --cask lozhka13/tap/screenshooter
 ```
 
-Or download `Screenshooter-2.0.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications. For compression install `brew install ffmpeg oxipng`.
+Or download `Screenshooter-2.1.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications. For compression install `brew install ffmpeg oxipng`.
 
 The **[installation guide](docs/INSTALL.md)** covers the first launch, permissions, categories, connecting Claude, updating and troubleshooting.
 

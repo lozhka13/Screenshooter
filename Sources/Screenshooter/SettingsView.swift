@@ -22,6 +22,7 @@ struct GeneralSettings: View {
   @AppStorage("suggestFolders") var suggestFolders = true
   @AppStorage("detectSecrets") var detectSecrets = true
   @AppStorage("compress") var compress = true
+  @AppStorage("smartNames") var smartNames = true
   @State var openAtLogin = SMAppService.mainApp.status == .enabled
 
   var compressionTools: Bool {
@@ -44,6 +45,11 @@ struct GeneralSettings: View {
         Toggle("Suggest a folder from similar screenshots", isOn: $suggestFolders)
         Toggle("Name files after the page or heading", isOn: $renameFiles)
         Toggle("Highlight passwords and tokens", isOn: $detectSecrets)
+        Toggle("Smart names with Apple Intelligence", isOn: $smartNames)
+        if !Summarizer.isAvailable {
+          Text("Turn on Apple Intelligence in System Settings to name files from what the screen shows.")
+            .foregroundStyle(.secondary)
+        }
       }
       Section("Compression") {
         Toggle("Compress after sorting (PNG lossless, video H.265)", isOn: $compress)

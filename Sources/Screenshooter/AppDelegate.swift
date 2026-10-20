@@ -7,9 +7,11 @@ import SwiftUI
 final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate {
   var window: NSWindow!
   var settingsWindow: NSWindow?
+  var libraryWindow: NSWindow?
   var statusItem: NSStatusItem!
   var scanTimer: Timer?
   var recordingShortcut: HotKey?
+  var searchShortcut: HotKey?
   let model = MainActor.assumeIsolated { SorterModel() }
   let recorder = MainActor.assumeIsolated { Recorder() }
   var large = UserDefaults.standard.bool(forKey: "large") {
@@ -106,9 +108,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
     RunLoop.main.add(timer, forMode: .common)
     scanTimer = timer
 
+    // SCREENSHOOTER_DEMO_LIBRARY="query" — open the library with a search, for README screenshots.
+    if demoMode, launchEnvironment["SCREENSHOOTER_DEMO_LIBRARY"] != nil { openLibrary() }
     if !demoMode {
       recordingShortcut = HotKey(keyCode: kVK_ANSI_R, modifiers: cmdKey | optionKey | controlKey, id: 1) { [weak self] in
         self?.toggleRecording()
+      }
+      searchShortcut = HotKey(keyCode: kVK_ANSI_F, modifiers: cmdKey | optionKey | controlKey, id: 2) { [weak self] in
+        self?.openLibrary()
       }
       MainActor.assumeIsolated {
         if Setup.isAppBundle && !Setup.welcomed {
@@ -146,6 +153,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
     }
     let record = item(menu, recording ? L("Stop Recording") : L("Record Screen"), #selector(toggleRecording), "r")
     record.keyEquivalentModifierMask = [.command, .option, .control]
+    let search = item(menu, L("Search Screenshots…"), #selector(openLibrary), "f")
+    search.keyEquivalentModifierMask = [.command, .option, .control]
     if canUndo { item(menu, L("Undo Last Sort"), #selector(undo)) }
     menu.addItem(.separator())
     item(menu, L("Open Screenshots Folder"), #selector(openFolder))
@@ -176,6 +185,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
 
   @objc func checkForUpdates() {
     Task { await Updater.check(userInitiated: true) }
+  }
+
+  @objc func openLibrary() {
+    if libraryWindow == nil {
+      let window = NSWindow(
+        contentRect: NSRect(x: 0, y: 0, width: 960, height: 640),
+        styleMask: [.titled, .closable, .resizable, .miniaturizable], backing: .buffered, defer: false)
+      window.title = L("Screenshot Library")
+      window.isReleasedWhenClosed = false
+      window.contentView = NSHostingView(rootView: LibraryView(initialQuery: launchEnvironment["SCREENSHOOTER_DEMO_LIBRARY"] ?? ""))
+      window.setFrameAutosaveName("Library")
+      if !window.setFrameUsingName("Library") { window.center() }
+      libraryWindow = window
+    }
+    if demoMode {
+      libraryWindow?.orderFrontRegardless()
+      return
+    }
+    libraryWindow?.makeKeyAndOrderFront(nil)
+    NSApp.activate(ignoringOtherApps: true)
   }
 
   @objc func openSettings() {

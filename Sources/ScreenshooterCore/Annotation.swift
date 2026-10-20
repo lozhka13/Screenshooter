@@ -136,3 +136,44 @@ public enum Renderer {
     NSGraphicsContext.restoreGraphicsState()
   }
 }
+
+extension Renderer {
+  // A presentation-ready copy: the screenshot with rounded corners and a soft shadow
+  // on a gradient background, like the app's icon.
+  public static func beautify(_ image: CGImage) -> CGImage? {
+    let width = CGFloat(image.width)
+    let height = CGFloat(image.height)
+    let padding = (max(width, height) * 0.07).rounded()
+    let canvas = CGSize(width: width + padding * 2, height: height + padding * 2)
+    guard let space = CGColorSpace(name: CGColorSpace.sRGB),
+      let context = CGContext(
+        data: nil, width: Int(canvas.width), height: Int(canvas.height), bitsPerComponent: 8, bytesPerRow: 0,
+        space: space, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue),
+      let gradient = CGGradient(
+        colorsSpace: space,
+        colors: [
+          NSColor(red: 0.43, green: 0.29, blue: 1, alpha: 1).cgColor,
+          NSColor(red: 0.23, green: 0.42, blue: 1, alpha: 1).cgColor,
+          NSColor(red: 0.09, green: 0.78, blue: 0.94, alpha: 1).cgColor,
+        ] as CFArray, locations: [0, 0.55, 1])
+    else { return nil }
+    context.drawLinearGradient(
+      gradient, start: CGPoint(x: 0, y: canvas.height), end: CGPoint(x: canvas.width, y: 0), options: [])
+
+    let frame = CGRect(x: padding, y: padding, width: width, height: height)
+    let radius = min(width, height) * 0.025
+    let shape = CGPath(roundedRect: frame, cornerWidth: radius, cornerHeight: radius, transform: nil)
+    context.saveGState()
+    context.setShadow(offset: CGSize(width: 0, height: -padding * 0.12), blur: padding * 0.45,
+      color: NSColor.black.withAlphaComponent(0.35).cgColor)
+    context.addPath(shape)
+    context.setFillColor(NSColor.white.cgColor)
+    context.fillPath()
+    context.restoreGState()
+
+    context.addPath(shape)
+    context.clip()
+    context.draw(image, in: frame)
+    return context.makeImage()
+  }
+}

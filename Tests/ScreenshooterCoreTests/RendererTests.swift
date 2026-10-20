@@ -38,3 +38,19 @@ struct RendererTests {
     #expect(edge[0] > 200 && edge[1] < 120)
   }
 }
+
+struct BeautifyTests {
+  @Test func addsPaddingAndKeepsTheShot() throws {
+    let context = CGContext(
+      data: nil, width: 200, height: 100, bitsPerComponent: 8, bytesPerRow: 0,
+      space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+    context.setFillColor(NSColor.white.cgColor)
+    context.fill(CGRect(x: 0, y: 0, width: 200, height: 100))
+    let result = try #require(Renderer.beautify(context.makeImage()!))
+    #expect(result.width == 228 && result.height == 128)  // 7 % of the long edge on each side
+    let data = result.dataProvider!.data! as Data
+    let center = (64 * result.bytesPerRow) + 114 * 4
+    #expect(data[center] > 240 && data[center + 2] > 240)  // the white screenshot in the middle
+    #expect(data[2] > 150)  // a blue-violet corner
+  }
+}

@@ -9,10 +9,11 @@ public struct ShotMetadata: Codable, Equatable, Sendable {
   public var pageTitle: String?
   public var windowTitle: String?
   public var text: String?  // recognized text
+  public var summary: String?  // short on-device AI title
 
   public init(
     appBundleID: String? = nil, appName: String? = nil, url: String? = nil, pageTitle: String? = nil,
-    windowTitle: String? = nil, text: String? = nil
+    windowTitle: String? = nil, text: String? = nil, summary: String? = nil
   ) {
     self.appBundleID = appBundleID
     self.appName = appName
@@ -20,6 +21,7 @@ public struct ShotMetadata: Codable, Equatable, Sendable {
     self.pageTitle = pageTitle
     self.windowTitle = windowTitle
     self.text = text
+    self.summary = summary
   }
 
   public var host: String? {
@@ -33,7 +35,7 @@ public struct ShotMetadata: Codable, Equatable, Sendable {
 
   // Everything searchable in one lowercase string.
   public var searchableText: String {
-    [appName, url, pageTitle, windowTitle, text].compactMap { $0 }.joined(separator: "\n").lowercased()
+    [appName, url, pageTitle, windowTitle, summary, text].compactMap { $0 }.joined(separator: "\n").lowercased()
   }
 
   static let attribute = "com.screenshooter.meta"

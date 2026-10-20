@@ -41,6 +41,10 @@ public enum Preferences {
     get { flag("recordMicrophone", default: true) }
     set { defaults.set(newValue, forKey: "recordMicrophone") }
   }
+  public static var smartNames: Bool {
+    get { flag("smartNames", default: true) }
+    set { defaults.set(newValue, forKey: "smartNames") }
+  }
   public static var checkForUpdates: Bool {
     get { flag("checkForUpdates", default: true) }
     set { defaults.set(newValue, forKey: "checkForUpdates") }

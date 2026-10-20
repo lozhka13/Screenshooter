@@ -7,7 +7,7 @@ public enum Namer {
   static let datePattern = try! NSRegularExpression(pattern: #"(\d{4}-\d{2}-\d{2})\D+?(\d{1,2}[.:]\d{2}[.:]\d{2})"#)
 
   public static func name(for url: URL, metadata: ShotMetadata?, headline: String?) -> String {
-    let title = [metadata?.pageTitle, metadata?.windowTitle, headline, metadata?.appName]
+    let title = [metadata?.pageTitle, metadata?.windowTitle, metadata?.summary, headline, metadata?.appName]
       .compactMap { $0.flatMap(clean) }
       .first
     guard let title else { return url.lastPathComponent }
