@@ -10,7 +10,15 @@ public struct TextLine: @unchecked Sendable {
 
   // Box of part of the line, e.g. just the password after "password:".
   public func box(for range: Range<String.Index>) -> CGRect {
-    candidate.boundingBox(for: range).map { flip($0.boundingBox.cgRect) } ?? box
+    candidate.boundingBox(for: range).map { flip($0.boundingBox.cgRect) } ?? estimate(range)
+  }
+
+  // Vision sometimes can't box a substring (e.g. in virtual machines); share the line by characters.
+  func estimate(_ range: Range<String.Index>) -> CGRect {
+    let total = CGFloat(max(text.count, 1))
+    let start = CGFloat(text.distance(from: text.startIndex, to: range.lowerBound)) / total
+    let length = CGFloat(text.distance(from: range.lowerBound, to: range.upperBound)) / total
+    return CGRect(x: box.minX + box.width * start, y: box.minY, width: box.width * length, height: box.height)
   }
 }
 
