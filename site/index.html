@@ -3,12 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Screenshooter</title>
+<title>Screenshooter — Screenshot Organizer for Mac</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Screenshooter files every Mac screenshot in one keystroke: folder suggestions, secret blurring, screen recording with transcripts and Claude integration.">
+<meta name="description" content="Screenshooter is a free Mac app that files every screenshot in one keystroke: folder suggestions, password blurring, text search, screen recording with on-device transcripts and Claude integration.">
+<link rel="canonical" href="https://lozhka13.github.io/Screenshooter/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#5b3df5">
+<link rel="icon" type="image/png" href="img/icon.png">
+<link rel="apple-touch-icon" href="img/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Screenshooter">
+<meta property="og:title" content="Screenshooter — every Mac screenshot, filed in one keystroke">
+<meta property="og:description" content="Folder suggestions, password blurring, text search, screen recording with transcripts and Claude integration. Free for macOS 26.">
+<meta property="og:url" content="https://lozhka13.github.io/Screenshooter/">
+<meta property="og:image" content="https://lozhka13.github.io/Screenshooter/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Screenshooter sorting window suggesting a folder for a dashboard screenshot">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Screenshooter — every Mac screenshot, filed in one keystroke">
+<meta name="twitter:description" content="Folder suggestions, password blurring, text search, transcripts and Claude integration. Free for macOS 26.">
+<meta name="twitter:image" content="https://lozhka13.github.io/Screenshooter/img/og.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Screenshooter", "url": "https://lozhka13.github.io/Screenshooter/", "image": "https://lozhka13.github.io/Screenshooter/img/icon.png", "description": "Screenshooter is a free Mac app that files every screenshot and screen recording into the right folder with one keystroke. It suggests the folder, renames the file, blurs passwords, compresses it and lets Claude search everything you captured.", "applicationCategory": "UtilitiesApplication", "applicationSubCategory": "Screenshot organizer", "operatingSystem": "macOS 26 or later", "processorRequirements": "Apple Silicon", "softwareVersion": "2.1.0", "datePublished": "2026-10-20", "dateModified": "2026-10-20", "downloadUrl": "https://github.com/lozhka13/Screenshooter/releases/latest", "installUrl": "https://github.com/lozhka13/Screenshooter/blob/main/docs/INSTALL.md", "codeRepository": "https://github.com/lozhka13/Screenshooter", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "screenshot": ["https://lozhka13.github.io/Screenshooter/img/suggestion.png", "https://lozhka13.github.io/Screenshooter/img/secrets.png", "https://lozhka13.github.io/Screenshooter/img/editor.png", "https://lozhka13.github.io/Screenshooter/img/library.png"], "featureList": ["Files screenshots into folders with one keystroke", "Learns folder suggestions from past choices", "Renames files from the page title or heading", "Detects and blurs passwords, API keys and card numbers", "Arrows, boxes, text and blur editor", "Search screenshots by recognized text", "Screen recording with system audio and microphone", "On-device transcription of recordings", "Pin screenshots on top of other windows", "Copy text from screenshots", "GIF export", "MCP server for Claude", "Lossless PNG and H.265 video compression"], "author": {"@type": "Person", "name": "lozhka13", "url": "https://github.com/lozhka13"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Screenshooter?", "acceptedAnswer": {"@type": "Answer", "text": "Screenshooter is a free Mac app that files every screenshot and screen recording into the right folder with one keystroke. It suggests the folder, renames the file, blurs passwords, compresses it and lets Claude search everything you captured."}}, {"@type": "Question", "name": "How do I organize screenshots on a Mac automatically?", "acceptedAnswer": {"@type": "Answer", "text": "Install Screenshooter and keep taking screenshots with ⌘⇧3, ⌘⇧4 or ⌘⇧5. Each new screenshot opens a sorting window: press Return to accept the suggested folder or 1–9 to pick a category. Files land in plain folders inside ~/Screenshots."}}, {"@type": "Question", "name": "How do I blur a password in a screenshot on a Mac?", "acceptedAnswer": {"@type": "Answer", "text": "Screenshooter reads every screenshot on your Mac and frames passwords, API keys, tokens and card numbers in red. Press R to pixelate them in the file, or press E and use the blur tool for anything else."}}, {"@type": "Question", "name": "How do I search for text inside my screenshots?", "acceptedAnswer": {"@type": "Answer", "text": "Press ⌃⌥⌘F to open the Screenshooter library and type any word that was on the screen, in a page title or in an app name. Recognized text is stored with each file, so search is instant and offline."}}, {"@type": "Question", "name": "How do I record a call on a Mac with both voices and get a transcript?", "acceptedAnswer": {"@type": "Answer", "text": "Press ⌃⌥⌘R in Screenshooter to record the screen with system audio and your microphone, then press it again to stop. The recording is transcribed on your Mac into a timestamped .txt file next to the video."}}, {"@type": "Question", "name": "Does Screenshooter upload my screenshots?", "acceptedAnswer": {"@type": "Answer", "text": "No. Text recognition, transcription and smart names run on your Mac. The only network request is a daily update check against GitHub, which you can turn off."}}, {"@type": "Question", "name": "Can Claude read my screenshots and call transcripts?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if you connect Screenshooter's built-in MCP server. Claude can then search, view and file screenshots and read transcripts, but only inside your ~/Screenshots folder."}}, {"@type": "Question", "name": "Is Screenshooter free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Screenshooter is free, and its source code is on GitHub. It needs macOS 26 Tahoe on an Apple Silicon Mac."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "name": "How to organize Mac screenshots automatically with Screenshooter", "totalTime": "PT5M", "tool": [{"@type": "HowToTool", "name": "Screenshooter"}], "step": [{"@type": "HowToStep", "position": 1, "name": "Install", "text": "Run brew install --cask lozhka13/tap/screenshooter, or drag Screenshooter from the disk image to Applications."}, {"@type": "HowToStep", "position": 2, "name": "Open it once", "text": "Screenshooter sets up ~/Screenshots/Inbox, makes macOS save screenshots there and starts with your Mac."}, {"@type": "HowToStep", "position": 3, "name": "Take a screenshot", "text": "Press ⌘⇧4 as usual. The sorting window opens with a large preview."}, {"@type": "HowToStep", "position": 4, "name": "Press one key", "text": "Press Return for the suggested folder or 1–9 for a category. The file is renamed and compressed in the background."}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Martian+Mono:wght@400;600&display=swap">
 <style>
   /* Layout: a keyboard-first product page — keycaps are the visual motif, real app windows are the proof. */
   :root {
@@ -24,9 +45,9 @@
     --key-side: #c9cbe0;
     --key-ink: #10132a;
     --shot-shadow: 0 30px 60px -20px rgba(22, 20, 70, 0.35);
-    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
-    --body: "Instrument Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue Condensed", sans-serif;
+    --body: "Atkinson Hyperlegible", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Martian Mono", ui-monospace, Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -81,13 +102,13 @@
   }
   a { color: inherit; }
   :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
-  h1, h2, h3 { font-family: var(--display); line-height: 1.04; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
-  h1 { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 800; }
-  h2 { font-size: clamp(2rem, 4vw, 3.1rem); font-weight: 800; }
-  h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
+  h1, h2, h3 { font-family: var(--display); line-height: 0.96; margin: 0; text-wrap: balance; letter-spacing: 0.005em; }
+  h1 { font-size: clamp(3.2rem, 8.6vw, 7rem); font-weight: 900; }
+  h2 { font-size: clamp(2.4rem, 5vw, 3.9rem); font-weight: 800; }
+  h3 { font-size: 1.6rem; font-weight: 800; line-height: 1.05; }
   p { margin: 0; }
   .lede { font-size: 1.2rem; color: var(--muted); max-width: 34em; }
-  .eyebrow { font: 700 0.78rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--violet); }
+  .eyebrow { font: 600 0.72rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--violet); }
 
   /* Nav */
   .nav {
@@ -97,7 +118,7 @@
     border-bottom: 1px solid var(--line);
   }
   .nav .wrap { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
-  .brand { display: flex; align-items: center; gap: 10px; font: 800 1.15rem/1 var(--display); text-decoration: none; }
+  .brand { display: flex; align-items: center; gap: 10px; font: 900 1.5rem/1 var(--display); letter-spacing: 0.01em; text-decoration: none; }
   .brand img { width: 30px; height: 30px; }
   .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 0.95rem; }
   .nav-links a { text-decoration: none; color: var(--muted); }
@@ -246,7 +267,7 @@
   /* FAQ */
   .faq { padding-block: 24px 88px; }
   .faq details { border-top: 1px solid var(--line); padding-block: 18px; }
-  .faq summary { cursor: pointer; font: 600 1.1rem var(--display); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary { cursor: pointer; font: 800 1.45rem/1.15 var(--display); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
   .faq summary::after { content: "+"; font-family: var(--mono); color: var(--violet); }
   .faq details[open] summary::after { content: "–"; }
   .faq details p { color: var(--muted); margin-top: 10px; max-width: 46em; }
@@ -254,6 +275,103 @@
   footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 0.9rem; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
   footer nav { display: flex; gap: 20px; margin-left: auto; flex-wrap: wrap; }
+
+  /* Answer-first summary */
+  .answer { padding-block: 24px 40px; }
+  .answer-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .definition { font-size: 1.25rem; color: var(--ink) !important; max-width: 36em; }
+  .steps { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; color: var(--muted); }
+  .steps b { color: var(--ink); }
+  .copy .steps li { display: list-item; }
+  .facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--surface); }
+  .facts div { padding: 16px 18px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
+  .facts div:nth-child(odd) { border-right: 1px solid var(--line); }
+  .facts div:nth-last-child(-n+2) { border-bottom: 0; }
+  .facts dt { font-size: 0.85rem; color: var(--muted); }
+  .facts dd { margin: 0; font: 800 1.9rem/1 var(--display); font-variant-numeric: tabular-nums; }
+  @media (max-width: 860px) { .answer-grid { grid-template-columns: 1fr; } }
+
+  /* Comparison */
+  .compare { padding-block: 72px; }
+  .table-scroll { overflow-x: auto; margin-top: 28px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 0.97rem; }
+  th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  thead th { font: 600 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  tbody th { font-weight: 700; }
+  td { color: var(--muted); }
+  td.yes { color: var(--ink); font-weight: 700; }
+  td.yes::before { content: "✓ "; color: var(--violet); }
+
+  /* Interactive demo */
+  .try { padding-block: 64px; }
+  .demo {
+    position: relative; margin-top: 28px; aspect-ratio: 16 / 10.6; max-width: 100%; border-radius: 22px; overflow: hidden;
+    background: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--violet) 55%, #000), transparent 60%),
+      radial-gradient(120% 120% at 100% 100%, color-mix(in srgb, var(--cyan) 55%, #000), transparent 60%), #1b1f45;
+    display: grid; place-items: center; padding: 4%;
+  }
+  .demo-window { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45); background: #0f1224; }
+  .demo-bar { display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: #1d2140; color: #a1a6c8; font: 400 0.7rem var(--mono); }
+  .demo-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+  .demo-bar i:nth-child(2) { background: #febc2e; }
+  .demo-bar i:nth-child(3) { background: #28c840; margin-right: 8px; }
+  .demo-window img { display: block; width: 100%; height: auto; }
+  .demo-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+  .demo-flash.on { animation: flash 0.45s ease-out; }
+  @keyframes flash { 0% { opacity: 0.9; } 100% { opacity: 0; } }
+
+  .sorter, .finder {
+    position: absolute; inset: 5%; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    display: flex; flex-direction: column;
+  }
+  .sorter { background: rgba(12, 14, 30, 0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); color: #eef0ff; padding: 10px 14px 14px; gap: 10px; }
+  .sorter-title { font: 400 0.7rem var(--mono); color: #a1a6c8; text-align: center; }
+  .sorter-preview { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; }
+  .sorter-preview img { max-width: 100%; max-height: 100%; border-radius: 8px; display: block; }
+  #sorter-secrets { position: absolute; inset: 0; pointer-events: none; }
+  .secret-box { position: absolute; border: 2px dashed #ff5a4f; background: rgba(255, 90, 79, 0.18); border-radius: 4px; }
+  .secret-box.blurred { border-style: solid; background: repeating-linear-gradient(45deg, #9aa0c8 0 6px, #b8bde0 6px 12px); }
+  .sorter-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(255, 255, 255, 0.08);
+    color: #eef0ff; border-radius: 999px; padding: 6px 13px; font: 600 0.85rem var(--body); cursor: pointer;
+  }
+  .chip:hover { background: rgba(255, 255, 255, 0.16); }
+  .chip.suggest { background: color-mix(in srgb, var(--violet) 55%, transparent); border-color: transparent; }
+  .chip.warn { background: rgba(255, 159, 10, 0.35); border-color: transparent; }
+  .chip.danger { background: rgba(255, 69, 58, 0.35); border-color: transparent; }
+  .chip kbd { font: 600 0.62rem var(--mono); background: rgba(255, 255, 255, 0.14); border-radius: 4px; padding: 1px 5px; color: #c9cdf0; }
+
+  .finder { background: var(--surface); color: var(--ink); flex-direction: row; border: 1px solid var(--line); }
+  .finder-side { width: 26%; min-width: 120px; background: var(--bg); border-right: 1px solid var(--line); padding: 14px 8px; display: grid; align-content: start; gap: 2px; font-size: 0.85rem; }
+  .finder-side .label { font: 600 0.62rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 4px 10px 6px; }
+  .finder-side button { text-align: left; border: 0; background: none; color: var(--ink); padding: 6px 10px; border-radius: 7px; font: 400 0.88rem var(--body); cursor: pointer; }
+  .finder-side button.on { background: color-mix(in srgb, var(--violet) 18%, transparent); color: var(--violet); font-weight: 700; }
+  .finder-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .finder-path { padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px; }
+  .finder-path button { border: 0; background: none; color: var(--ink); font: 700 0.85rem var(--body); cursor: pointer; padding: 0; }
+  .finder-grid { flex: 1; overflow: auto; padding: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 14px; align-content: start; }
+  .item { border: 0; background: none; color: var(--ink); display: grid; gap: 6px; justify-items: center; text-align: center; font: 400 0.74rem/1.25 var(--body); cursor: pointer; padding: 6px; border-radius: 10px; }
+  .item:hover, .item.on { background: color-mix(in srgb, var(--violet) 14%, transparent); }
+  .item .folder { width: 64px; height: 50px; border-radius: 6px 6px 8px 8px; background: linear-gradient(#7cc4ff, #4a9cf2); position: relative; }
+  .item .folder::before { content: ""; position: absolute; left: 0; top: -6px; width: 26px; height: 9px; border-radius: 4px 4px 0 0; background: #7cc4ff; }
+  .item img { width: 96px; height: 60px; object-fit: cover; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); }
+  .item.new img { outline: 3px solid var(--violet); }
+  .finder-empty { color: var(--muted); font-size: 0.9rem; grid-column: 1 / -1; padding: 20px 0; }
+
+  .demo-toast { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: rgba(12, 14, 30, 0.85); color: #fff; padding: 7px 14px; border-radius: 999px; font: 600 0.82rem var(--body); opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
+  .demo-toast.on { opacity: 1; }
+  .demo-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .demo-btn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 12px; padding: 10px 16px; font: 700 0.95rem var(--body); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+  .demo-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .demo-btn.primary .kbd { background: transparent; color: inherit; border-color: color-mix(in srgb, var(--bg) 40%, transparent); }
+  @media (max-width: 640px) {
+    .demo { aspect-ratio: 3 / 4; padding: 3%; }
+    .sorter, .finder { inset: 3%; }
+    .finder-side { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .demo-flash.on { animation: none; } }
 </style>
 </head>
 <body>
@@ -294,11 +412,11 @@
             <button type="button" id="copy-brew" data-target="brew-cmd">Copy</button>
           </div>
         </div>
-        <p class="fine">Free and open source. Everything runs on your Mac.</p>
+        <p class="fine">Free · Source code on GitHub · Version 2.1.0 · Nothing leaves your Mac</p>
       </div>
 
       <div class="hero-shot">
-        <img class="shot" src="img/suggestion.png" width="1600" height="1132" alt="Screenshooter window showing a dashboard screenshot with a suggested folder, Projects › Atlas, and buttons for Work, Projects and Personal">
+        <img class="shot" src="img/suggestion.png" width="1600" height="1132" fetchpriority="high" alt="Screenshooter window showing a dashboard screenshot with a suggested folder, Projects › Atlas, and buttons for Work, Projects and Personal">
       </div>
       <div class="keys" aria-label="Sorting keys">
         <span class="key wide" data-key="0">↩</span>
@@ -306,6 +424,72 @@
         <span class="key" data-key="2">2</span>
         <span class="key" data-key="3">3</span>
         <span class="key-caption" id="key-caption" aria-live="polite"><b>↩</b> takes the suggestion: Projects › Atlas</span>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="answer" id="what" aria-labelledby="what-title">
+    <div class="wrap answer-grid">
+      <div class="copy">
+        <span class="eyebrow">In one paragraph</span>
+        <h2 id="what-title">What is Screenshooter?</h2>
+        <p class="definition">Screenshooter is a free Mac app that files every screenshot and screen recording into the right folder with one keystroke. It suggests the folder, renames the file, blurs passwords, compresses it and lets Claude search everything you captured.</p>
+        <h3>How it works</h3>
+        <ol class="steps">
+          <li><b>Take a screenshot</b> with ⌘⇧3, ⌘⇧4 or ⌘⇧5, as always.</li>
+          <li><b>A sorting window opens</b> with a large preview and a suggested folder.</li>
+          <li><b>Press one key</b>: Return for the suggestion, 1–9 for a category.</li>
+          <li><b>It's filed</b>, renamed after what's on screen and compressed in the background.</li>
+        </ol>
+      </div>
+      <dl class="facts" aria-label="Key facts">
+        <div><dt>Keystrokes to file a screenshot</dt><dd>1</dd></div>
+        <div><dt>Categories on number keys</dt><dd>up to 9</dd></div>
+        <div><dt>Screenshots or audio uploaded</dt><dd>0</dd></div>
+        <div><dt>Screen recordings after compression</dt><dd>~5× smaller</dd></div>
+        <div><dt>Loupe magnification</dt><dd>2.5×</dd></div>
+        <div><dt>Price</dt><dd>Free</dd></div>
+        <div><dt>Requires</dt><dd>macOS 26, Apple Silicon</dd></div>
+        <div><dt>Latest version</dt><dd>2.1.0 · Oct 20, 2026</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="try" id="try" aria-labelledby="try-title">
+    <div class="wrap">
+      <span class="eyebrow">Try it here</span>
+      <h2 id="try-title">Take a screenshot of this window.</h2>
+      <p class="lede" style="margin-top: 14px">Press <span class="kbd">S</span> or the button below, then file it with <span class="kbd">↩</span> or <span class="kbd">1</span>–<span class="kbd">3</span>. Your Mac keeps <span class="kbd">⌘⇧4</span> for itself, so a browser never sees it — in the real app that shortcut is all you need.</p>
+      <div class="demo" id="demo">
+        <div class="demo-window">
+          <div class="demo-bar"><i></i><i></i><i></i><span id="demo-app-title">Atlas — Q3 Overview</span></div>
+          <img id="demo-app" src="img/screen-atlas.png" width="1280" height="800" alt="Demo app window to take a screenshot of">
+        </div>
+        <div class="demo-flash" id="demo-flash"></div>
+
+        <div class="sorter" id="sorter" hidden>
+          <div class="sorter-title" id="sorter-title">1 / 1 · Screenshot</div>
+          <div class="sorter-preview">
+            <img id="sorter-img" src="img/screen-atlas.png" alt="The screenshot you just took">
+            <div id="sorter-secrets"></div>
+          </div>
+          <div class="sorter-chips" id="sorter-chips"></div>
+        </div>
+
+        <div class="finder" id="finder" hidden>
+          <aside class="finder-side" id="finder-side" aria-label="Folders"></aside>
+          <div class="finder-main">
+            <div class="finder-path" id="finder-path"></div>
+            <div class="finder-grid" id="finder-grid"></div>
+          </div>
+        </div>
+        <div class="demo-toast" id="demo-toast" aria-live="polite"></div>
+      </div>
+      <div class="demo-controls">
+        <button type="button" class="demo-btn primary" id="demo-shoot">Take a screenshot <span class="kbd">S</span></button>
+        <button type="button" class="demo-btn" id="demo-finder">Open the Screenshots folder</button>
+        <button type="button" class="demo-btn" id="demo-reset">Start over</button>
       </div>
     </div>
   </section>
@@ -447,6 +631,29 @@
     </div>
   </section>
 
+  <section class="compare" aria-labelledby="compare-title">
+    <div class="wrap">
+      <span class="eyebrow">Compared with what's built in</span>
+      <h2 id="compare-title">Screenshooter vs. the macOS screenshot tool</h2>
+      <p class="lede" style="margin-top: 14px">macOS takes great screenshots. Screenshooter picks up where it stops: after the shot.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th scope="col">What you need</th><th scope="col">macOS screenshots</th><th scope="col">Screenshooter</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Choose a folder for each screenshot</th><td>One fixed folder</td><td class="yes">One key, with suggestions</td></tr>
+            <tr><th scope="row">Meaningful file names</th><td>Date and time</td><td class="yes">Page title or heading</td></tr>
+            <tr><th scope="row">Find a screenshot by its text</th><td>Spotlight, sometimes</td><td class="yes">Library search, ⌃⌥⌘F</td></tr>
+            <tr><th scope="row">Spot passwords before sharing</th><td>No</td><td class="yes">Framed in red, blurred with R</td></tr>
+            <tr><th scope="row">Arrows, boxes, text</th><td>Markup in Preview</td><td class="yes">In the sorting window, E</td></tr>
+            <tr><th scope="row">Record call audio</th><td>Microphone only</td><td class="yes">System audio and microphone</td></tr>
+            <tr><th scope="row">Transcript of a recording</th><td>No</td><td class="yes">On device, .txt next to the video</td></tr>
+            <tr><th scope="row">Ask an AI assistant about captures</th><td>No</td><td class="yes">MCP server for Claude</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <section class="keymap" id="keys">
     <div class="wrap">
       <span class="eyebrow">Cheat sheet</span>
@@ -478,7 +685,7 @@
         <div><b>Hidden from screen capture</b><span>The sorting window never shows up in your own screenshots or recordings.</span></div>
         <div><b>One network request</b><span>A daily update check against GitHub, which you can turn off.</span></div>
         <div><b>Plain folders</b><span>Files live in ~/Screenshots. No database, no lock-in.</span></div>
-        <div><b>Open source</b><span>Read every line, plus a security report for each release.</span></div>
+        <div><b>Source on GitHub</b><span>Read every line, plus a security report for each release.</span></div>
       </div>
     </div>
   </section>
@@ -504,14 +711,16 @@
     </div>
   </section>
 
-  <section class="faq" id="faq">
+  <section class="faq" id="faq" aria-labelledby="faq-title">
     <div class="wrap">
-      <h2 style="margin-bottom: 20px">Questions</h2>
-      <details><summary>Does it replace the macOS screenshot tool?</summary><p>No. Keep using ⌘⇧3, ⌘⇧4 and ⌘⇧5. Screenshooter picks up what they save and helps you file it, so there is nothing new to learn about taking screenshots.</p></details>
-      <details><summary>How does it know which folder to suggest?</summary><p>It remembers the app, the browser address and the words on each screenshot you file. When a new screenshot looks like earlier ones, it suggests the same folder. You can also give each category keywords, like a domain name or a project name.</p></details>
-      <details><summary>Which languages can it read and transcribe?</summary><p>Text recognition handles English, Russian and the other languages Apple Vision supports. Transcription works on your Mac for English, Russian and other languages macOS can recognize offline.</p></details>
-      <details><summary>Does anything leave my Mac?</summary><p>No screenshots, text or audio are uploaded. The only request is a daily check for a new version on GitHub, which you can switch off. If you connect Claude, Claude reads files only when you ask it to.</p></details>
-      <details><summary>Can I keep my own folder structure?</summary><p>Yes. Categories map to plain folders in ~/Screenshots and subfolders come straight from disk. Rename or reorganize them in Finder whenever you like.</p></details>
+      <h2 id="faq-title" style="margin-bottom: 20px">Questions people ask</h2>
+      <details open><summary>How do I organize screenshots on a Mac automatically?</summary><p>Install Screenshooter and keep taking screenshots with ⌘⇧3, ⌘⇧4 or ⌘⇧5. Each new screenshot opens a sorting window: press Return to accept the suggested folder or 1–9 to pick a category. Files land in plain folders inside ~/Screenshots.</p></details>
+      <details><summary>How do I blur a password in a screenshot on a Mac?</summary><p>Screenshooter reads every screenshot on your Mac and frames passwords, API keys, tokens and card numbers in red. Press R to pixelate them in the file, or press E and use the blur tool for anything else.</p></details>
+      <details><summary>How do I search for text inside my screenshots?</summary><p>Press ⌃⌥⌘F to open the Screenshooter library and type any word that was on the screen, in a page title or in an app name. Recognized text is stored with each file, so search is instant and offline.</p></details>
+      <details><summary>How do I record a call on a Mac with both voices and get a transcript?</summary><p>Press ⌃⌥⌘R in Screenshooter to record the screen with system audio and your microphone, then press it again to stop. The recording is transcribed on your Mac into a timestamped .txt file next to the video.</p></details>
+      <details><summary>Does Screenshooter upload my screenshots?</summary><p>No. Text recognition, transcription and smart names run on your Mac. The only network request is a daily update check against GitHub, which you can turn off.</p></details>
+      <details><summary>Can Claude read my screenshots and call transcripts?</summary><p>Yes, if you connect Screenshooter's built-in MCP server. Claude can then search, view and file screenshots and read transcripts, but only inside your ~/Screenshots folder.</p></details>
+      <details><summary>Is Screenshooter free?</summary><p>Yes. Screenshooter is free, and its source code is on GitHub. It needs macOS 26 Tahoe on an Apple Silicon Mac.</p></details>
     </div>
   </section>
 </main>
@@ -519,7 +728,7 @@
 <footer>
   <div class="wrap">
     <a class="brand" href="#top"><img src="img/icon.png" alt="">Screenshooter</a>
-    <span>Made for people who take too many screenshots.</span>
+    <span>Made for people who take too many screenshots. Updated <time datetime="2026-10-20">October 20, 2026</time> · v2.1.0</span>
     <nav aria-label="Links">
       <a href="https://github.com/lozhka13/Screenshooter" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/lozhka13/Screenshooter/blob/main/docs/INSTALL.md" target="_blank" rel="noopener">Install guide</a>
@@ -571,6 +780,213 @@
       selectText();
     }
   });
+</script>
+<script>
+  // Interactive demo: a pretend screenshot, the sorting window and a tiny Finder — all in the page.
+  (function () {
+    var shots = [
+      { img: "img/screen-atlas.png", title: "Atlas — Q3 Overview", name: "Q3 Overview", suggest: ["Projects", "Atlas"], secrets: [] },
+      { img: "img/screen-keys.png", title: "Halo.cloud — API keys", name: "API keys · Halo cloud", suggest: ["Work"],
+        secrets: [[0.534, 0.233, 0.236, 0.031], [0.537, 0.306, 0.167, 0.031], [0.600, 0.569, 0.094, 0.032]] },
+      { img: "img/screen-orbit.png", title: "Orbit.coffee", name: "Fresh beans roasted the day we ship", suggest: ["Projects", "Orbit website"], secrets: [] },
+      { img: "img/screen-code.png", title: "billing.ts — halo-api", name: "billing.ts · halo-api", suggest: ["Work"], secrets: [] }
+    ];
+    var tree = { Inbox: [], Work: [], Projects: { Atlas: [], Halo: [], "Orbit website": [] }, Personal: { Travel: [] } };
+    var categories = ["Work", "Projects", "Personal"];
+    var index = 0, state = "idle", opened = null, blurred = false, clock = 42, lastFile = null, path = [];
+    var $ = function (id) { return document.getElementById(id); };
+    var demo = $("demo"), sorter = $("sorter"), finder = $("finder");
+
+    function node(parts) {
+      var here = tree;
+      parts.forEach(function (part) { here = here[part]; });
+      return here;
+    }
+    function toast(text) {
+      var t = $("demo-toast");
+      t.textContent = text; t.classList.add("on");
+      clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.classList.remove("on"); }, 1500);
+    }
+    function chip(label, key, cls, action) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "chip" + (cls ? " " + cls : "");
+      if (key) { var k = document.createElement("kbd"); k.textContent = key; b.appendChild(k); }
+      b.appendChild(document.createTextNode(label));
+      b.addEventListener("click", action);
+      return b;
+    }
+
+    function shoot() {
+      if (state === "sorting") return;
+      var shot = shots[index];
+      var flash = $("demo-flash");
+      flash.classList.remove("on"); void flash.offsetWidth; flash.classList.add("on");
+      finder.hidden = true;
+      state = "sorting"; opened = null; blurred = false;
+      $("sorter-img").src = shot.img;
+      clock += 3;
+      $("sorter-title").textContent = "1 / 1 · Screenshot 2026-10-20 at 10." + clock + ".15.png";
+      sorter.hidden = false;
+      renderSorter();
+    }
+
+    function renderSorter() {
+      var shot = shots[index];
+      var chips = $("sorter-chips");
+      chips.innerHTML = "";
+      var box = $("sorter-secrets");
+      box.innerHTML = "";
+      var img = $("sorter-img");
+      shot.secrets.forEach(function (r) {
+        var d = document.createElement("div");
+        d.className = "secret-box" + (blurred ? " blurred" : "");
+        var w = img.clientWidth, h = img.clientHeight, x0 = img.offsetLeft, y0 = img.offsetTop;
+        d.style.left = (x0 + r[0] * w - 3) + "px"; d.style.top = (y0 + r[1] * h - 2) + "px";
+        d.style.width = (r[2] * w + 6) + "px"; d.style.height = (r[3] * h + 4) + "px";
+        box.appendChild(d);
+      });
+      if (opened) {
+        chips.appendChild(chip("Back", "esc", "", back));
+        chips.appendChild(chip(opened, "1", "", function () { file([opened]); }));
+        Object.keys(node([opened])).forEach(function (sub, i) {
+          var isSuggested = shot.suggest[0] === opened && shot.suggest[1] === sub;
+          chips.appendChild(chip(sub, String(i + 2), isSuggested ? "suggest" : "", function () { file([opened, sub]); }));
+        });
+        return;
+      }
+      chips.appendChild(chip(shot.suggest.join(" › "), "↩", "suggest", function () { file(shot.suggest); }));
+      categories.forEach(function (name, i) {
+        var hasSubs = !Array.isArray(tree[name]);
+        chips.appendChild(chip(name + (hasSubs ? " ›" : ""), String(i + 1), "", function () { pick(name); }));
+      });
+      if (shot.secrets.length && !blurred) chips.appendChild(chip(shot.secrets.length + " secrets", "R", "warn", redact));
+      chips.appendChild(chip("Trash", "⌫", "danger", trash));
+    }
+    function pick(name) {
+      if (Array.isArray(tree[name])) { file([name]); return; }
+      opened = name; renderSorter();
+    }
+    function back() { opened = null; renderSorter(); }
+    function redact() { if (!shots[index].secrets.length) return; blurred = true; toast("Secrets blurred"); renderSorter(); }
+    function trash() { done(null); toast("Moved to Trash"); }
+    function file(parts) {
+      var shot = shots[index];
+      var name = "2026-10-20 10." + clock + ".15 — " + shot.name + ".png";
+      var target = node(parts);
+      if (!Array.isArray(target)) { target = target.__files || (target.__files = []); }
+      target.push({ name: name, img: shot.img });
+      lastFile = name;
+      done(parts);
+      toast("Filed in " + parts.join(" › "));
+    }
+    function done(parts) {
+      sorter.hidden = true; state = "idle";
+      index = (index + 1) % shots.length;
+      $("demo-app").src = shots[index].img;
+      $("demo-app-title").textContent = shots[index].title;
+      if (parts) openFinder(parts);
+    }
+
+    // Finder
+    function filesAndFolders(parts) {
+      var here = node(parts);
+      if (Array.isArray(here)) return { folders: [], files: here };
+      return { folders: Object.keys(here).filter(function (k) { return k !== "__files"; }), files: here.__files || [] };
+    }
+    function openFinder(parts) {
+      path = parts || [];
+      sorter.hidden = true; finder.hidden = false; state = state === "sorting" ? "sorting" : "finder";
+      renderFinder();
+    }
+    function renderFinder() {
+      var side = $("finder-side");
+      side.innerHTML = '<div class="label">Screenshots</div>';
+      ["Inbox"].concat(categories).forEach(function (name) {
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = name; b.className = path[0] === name ? "on" : "";
+        b.addEventListener("click", function () { path = [name]; renderFinder(); });
+        side.appendChild(b);
+      });
+      var crumbs = $("finder-path");
+      crumbs.innerHTML = "";
+      var root = document.createElement("button");
+      root.type = "button"; root.textContent = "Screenshots";
+      root.addEventListener("click", function () { path = []; renderFinder(); });
+      crumbs.appendChild(root);
+      path.forEach(function (part, i) {
+        crumbs.appendChild(document.createTextNode(" › "));
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = part;
+        b.addEventListener("click", function () { path = path.slice(0, i + 1); renderFinder(); });
+        crumbs.appendChild(b);
+      });
+      var grid = $("finder-grid");
+      grid.innerHTML = "";
+      var content = path.length ? filesAndFolders(path) : { folders: ["Inbox"].concat(categories), files: [] };
+      content.folders.forEach(function (name) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "item";
+        b.innerHTML = '<span class="folder" aria-hidden="true"></span>';
+        b.appendChild(document.createTextNode(name));
+        b.addEventListener("click", function () { path = path.concat(name); renderFinder(); });
+        grid.appendChild(b);
+      });
+      content.files.forEach(function (f) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "item" + (f.name === lastFile ? " new" : "");
+        var img = document.createElement("img"); img.src = f.img; img.alt = "";
+        b.appendChild(img); b.appendChild(document.createTextNode(f.name));
+        grid.appendChild(b);
+      });
+      if (!content.folders.length && !content.files.length) {
+        var empty = document.createElement("div");
+        empty.className = "finder-empty"; empty.textContent = "Empty. Take a screenshot and file it here.";
+        grid.appendChild(empty);
+      }
+    }
+
+    function reset() {
+      tree = { Inbox: [], Work: [], Projects: { Atlas: [], Halo: [], "Orbit website": [] }, Personal: { Travel: [] } };
+      index = 0; clock = 42; lastFile = null; state = "idle"; opened = null;
+      sorter.hidden = true; finder.hidden = true;
+      $("demo-app").src = shots[0].img; $("demo-app-title").textContent = shots[0].title;
+    }
+
+    $("demo-shoot").addEventListener("click", shoot);
+    $("demo-finder").addEventListener("click", function () { openFinder([]); });
+    $("demo-reset").addEventListener("click", reset);
+    window.addEventListener("resize", function () { if (state === "sorting") renderSorter(); });
+    $("sorter-img").addEventListener("load", function () { if (state === "sorting") renderSorter(); });
+
+    // Keys work while the demo is on screen and you're not typing somewhere.
+    var visible = false;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; }, { threshold: 0.35 }).observe(demo);
+    }
+    document.addEventListener("keydown", function (e) {
+      if (!visible || /input|textarea|select/i.test(e.target.tagName)) return;
+      var shortcut = e.metaKey && e.shiftKey && ["3", "4", "5", "#", "$", "%"].indexOf(e.key) !== -1;
+      if (state !== "sorting") {
+        var plainS = !e.metaKey && !e.ctrlKey && !e.altKey && /^[sSыЫ]$/.test(e.key);
+        if (shortcut || plainS) { e.preventDefault(); shoot(); }
+        return;
+      }
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      var shot = shots[index];
+      if (e.key === "Enter") { e.preventDefault(); file(shot.suggest); }
+      else if (e.key === "Escape") { e.preventDefault(); if (opened) back(); }
+      else if (e.key === "Backspace" || e.key === "Delete") { e.preventDefault(); trash(); }
+      else if (e.key === "r" || e.key === "R" || e.key === "к") { e.preventDefault(); redact(); }
+      else if (/^[1-9]$/.test(e.key)) {
+        var n = Number(e.key);
+        if (opened) {
+          var subs = Object.keys(node([opened]));
+          if (n === 1) file([opened]); else if (subs[n - 2]) file([opened, subs[n - 2]]);
+        } else if (categories[n - 1]) pick(categories[n - 1]);
+        e.preventDefault();
+      }
+    });
+  })();
 </script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lozhka13.github.io/Screenshooter/sitemap.xml

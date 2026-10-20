@@ -1,0 +1,24 @@
+# Screenshooter
+
+> Screenshooter is a free Mac app (macOS 26, Apple Silicon) that files every screenshot and screen recording into the right folder with one keystroke. It suggests the folder, renames the file, blurs passwords, compresses it and lets Claude search everything you captured. Text recognition and transcription run on the Mac; nothing is uploaded.
+
+## Key facts
+- Price: free. Source code: https://github.com/lozhka13/Screenshooter
+- Latest version: 2.1.0, released 2026-10-20
+- Install: `brew install --cask lozhka13/tap/screenshooter` or the disk image from GitHub Releases
+- Requires: macOS 26 Tahoe on Apple Silicon
+
+## What it does
+- Opens a sorting window after every ⌘⇧3 / ⌘⇧4 / ⌘⇧5 screenshot; Return files it in the suggested folder, 1–9 pick a category, N creates a folder, ⌘Z undoes
+- Learns folder suggestions from the app, browser tab and text of earlier screenshots
+- Names files after the page title or heading, or with Apple Intelligence on device
+- Detects passwords, API keys, tokens and card numbers and blurs them with R
+- Editor (E) for arrows, boxes, text and blur; copy image (C) or text (T); pin on top (P); style for slides (B)
+- Library window (⌃⌥⌘F) searches screenshots by their text, title, app and transcript
+- Records the screen with system audio and microphone (⌃⌥⌘R) and transcribes it on device into a .txt file; G makes a GIF
+- Built-in MCP server for Claude: search_screenshots, get_screenshot, latest_screenshot, move_screenshot, list_recordings, get_transcript
+
+## Docs
+- [README](https://github.com/lozhka13/Screenshooter#readme)
+- [Installation guide](https://github.com/lozhka13/Screenshooter/blob/main/docs/INSTALL.md)
+- [Security report](https://github.com/lozhka13/Screenshooter/blob/main/docs/security-report.md)
