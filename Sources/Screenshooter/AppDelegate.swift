@@ -66,6 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
     let menu = NSMenu()
     menu.delegate = self
     statusItem.menu = menu
+    NSApp.mainMenu = editMenu()
 
     MainActor.assumeIsolated {
       model.onLayout = { [weak self] in self?.fitPreview() }
@@ -124,6 +125,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         Updater.checkDaily()
       }
     }
+  }
+
+  // A menu bar app has no menus, so text fields get ⌘A, ⌘C, ⌘V and ⌘Z from this hidden Edit menu.
+  func editMenu() -> NSMenu {
+    let edit = NSMenu(title: L("Edit"))
+    edit.addItem(withTitle: L("Undo"), action: Selector(("undo:")), keyEquivalent: "z")
+    edit.addItem(withTitle: L("Redo"), action: Selector(("redo:")), keyEquivalent: "Z")
+    edit.addItem(.separator())
+    edit.addItem(withTitle: L("Cut"), action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+    edit.addItem(withTitle: L("Copy"), action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+    edit.addItem(withTitle: L("Paste"), action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+    edit.addItem(withTitle: L("Select All"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+    let item = NSMenuItem()
+    item.submenu = edit
+    let main = NSMenu()
+    main.addItem(NSMenuItem())  // the application menu slot
+    main.addItem(item)
+    return main
   }
 
   // Opening the app again from Finder shows the settings.

@@ -79,10 +79,10 @@ struct CategoriesSettings: View {
         ForEach(items.indices, id: \.self) { index in
           HStack(spacing: 8) {
             Text("\(index + 1)").monospacedDigit().foregroundStyle(.secondary).frame(width: 14)
-            TextField("Label", text: $items[index].label).frame(width: 110)
-            TextField("Folder", text: $items[index].folder).frame(width: 110)
+            TextField("Label", text: $items[index].label).clearable($items[index].label).frame(width: 110)
+            TextField("Folder", text: $items[index].folder).clearable($items[index].folder).frame(width: 110)
             Toggle("Subfolders", isOn: $items[index].hasSubfolders)
-            TextField("Keywords", text: keywords(index))
+            TextField("Keywords", text: keywords(index)).clearable(keywords(index))
             Button { move(index, by: -1) } label: { Image(systemName: "chevron.up") }
               .disabled(index == 0)
             Button { move(index, by: 1) } label: { Image(systemName: "chevron.down") }

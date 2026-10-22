@@ -114,7 +114,7 @@ struct SorterView: View {
         .foregroundStyle(.green)
       Text("All sorted")
         .font(.system(size: 26, weight: .semibold, design: .rounded))
-      Text("Press ⌘Z to undo the last one")
+      Text("⌘Z undoes the last one, Esc closes the window")
         .foregroundStyle(.secondary)
     }
   }
@@ -173,6 +173,7 @@ struct SorterView: View {
           TextField("Text", text: $markText)
             .textFieldStyle(.plain)
             .font(.system(size: 15, weight: .bold))
+            .clearable($markText)
             .padding(.horizontal, 8)
             .padding(.vertical, 5)
             .frame(width: 220)
@@ -234,6 +235,7 @@ struct SorterView: View {
       FlowLayout(spacing: 10) {
         if model.allDone {
           chip(id: "undo", key: "⌘Z", title: L("Undo"), symbol: "arrow.uturn.backward", action: model.undo)
+          chip(id: "close", key: "esc", title: L("Close"), symbol: "xmark", action: model.finishBatch)
         } else if model.editing {
           editorButtons
         } else if let category = model.opened {
@@ -379,6 +381,7 @@ struct SorterView: View {
         .frame(width: 180)
         .focused($nameFocused)
         .onSubmit(model.createFolder)
+        .clearable($model.newName)
       KeyCap(key: "↩")
     }
     .padding(.horizontal, 16)

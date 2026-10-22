@@ -498,8 +498,12 @@ final class SorterModel: ObservableObject {
   // Returns true if the key was handled.
   func handleKey(_ event: NSEvent) -> Bool {
     let command = event.modifierFlags.contains(.command)
-    if command && event.keyCode == 6 {  // ⌘Z
+    if command && event.keyCode == 6 && !naming && textPoint == nil {  // ⌘Z; in a text field it undoes typing
       if editing, !marks.isEmpty { marks.removeLast() } else { undo() }
+      return true
+    }
+    if allDone && event.keyCode == 53 {  // Esc closes "All sorted"
+      finishBatch()
       return true
     }
     guard current != nil else { return false }

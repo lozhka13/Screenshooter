@@ -15,7 +15,14 @@
 
 /* Sorting window */
 "All sorted" = "Всё разобрано";
-"Press ⌘Z to undo the last one" = "⌘Z — отменить последнее";
+"⌘Z undoes the last one, Esc closes the window" = "⌘Z — отменить последнее, Esc — закрыть окно";
+"Close" = "Закрыть";
+"Clear" = "Очистить";
+"Edit" = "Правка";
+"Redo" = "Повторить";
+"Cut" = "Вырезать";
+"Paste" = "Вставить";
+"Select All" = "Выбрать всё";
 "Undo" = "Отменить";
 "Undone" = "Отменено";
 "Copied" = "Скопировано";

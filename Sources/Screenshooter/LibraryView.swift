@@ -75,6 +75,7 @@ struct LibraryView: View {
           .textFieldStyle(.plain)
           .font(.title3)
           .focused($searchFocused)
+          .clearable($model.query)
         Picker("", selection: $model.scope) {
           Text("Everything").tag("")
           Text("Inbox").tag("Inbox")

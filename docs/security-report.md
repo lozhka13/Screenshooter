@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| **Release** | v2.2.0 |
-| **Date** | 2026-10-20 |
+| **Release** | v2.2.1 |
+| **Date** | 2026-10-22 |
 | **Scanner** | [Trivy](https://trivy.dev) 0.76.0, vulnerability DB updated 2026-10-20 07:17 UTC |
 | **Result** | No vulnerabilities, secrets, misconfigurations or license issues found |
 
@@ -48,6 +48,8 @@ Trivy can't see into Swift code, so the code was reviewed by hand, with unit tes
 **2.1.0 additions** — pinning, copying text, styling (rendered into the file with the original kept in the Trash, like edits), GIF export (written next to the recording with a unique name, never overwriting) and the library window (read-only search; indexing writes only the text attribute). Smart names send at most 1,500 characters of recognized text to Apple's on-device model.
 
 **2.2.0** — queue sidebar and arrow-key navigation only change which waiting file is shown; switching is disabled while the editor has unsaved marks. Licensed under MIT.
+
+**2.2.1** — a standard Edit menu for text fields (select all, copy, paste, undo), clear buttons in text fields and `Esc` on the “All sorted” screen. No new permissions or file access.
 
 **Undo and file safety** — moves never overwrite (`name 2.png`…); background transcription and compression start 8 seconds after a move and skip files that were moved back; undo refuses while a file is being compressed. Video compression rewrites in place with a clone of the original kept until the write succeeds.
 

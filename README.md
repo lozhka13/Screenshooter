@@ -76,7 +76,7 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 | `←` `→` (or `↑` `↓`) | Previous or next waiting file — or click a thumbnail in the sidebar |
 | `1` `2` `3` … | Category (second level: `1` — the category itself, `2…9` — subfolders) |
 | `N` | New subfolder |
-| `Esc` | Back |
+| `Esc` | Back; closes the window on the “All sorted” screen |
 | `Delete` | Move to Trash |
 | `⌘Z` | Undo the last move, delete or edit |
 | `C` | Copy to the clipboard |
@@ -87,6 +87,7 @@ Take a screenshot (`Cmd+Shift+3/4/5`) and a window opens with a large preview. P
 | `B` | Style: gradient background, rounded corners, shadow |
 | `G` | Make a GIF from a recording |
 | `⌃⌥⌘F` | Search the library (anywhere) |
+| `⌘A` `⌘C` `⌘V` | Select all, copy and paste in text fields; the ⓧ button clears a field |
 | `F` | Full screen width and back |
 | Right mouse button | Loupe on/off |
 | `⌃⌥⌘R` | Start or stop a screen recording (anywhere) |
@@ -100,7 +101,7 @@ Requires macOS 26 (Tahoe) on Apple Silicon.
 brew install --cask lozhka13/tap/screenshooter
 ```
 
-Or download `Screenshooter-2.2.0.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications. For compression install `brew install ffmpeg oxipng`.
+Or download `Screenshooter-2.2.1.dmg` from the [latest release](https://github.com/lozhka13/Screenshooter/releases/latest) and drag the app to Applications. For compression install `brew install ffmpeg oxipng`.
 
 The **[installation guide](docs/INSTALL.md)** covers the first launch, permissions, categories, connecting Claude, updating and troubleshooting.
 
